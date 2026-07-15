@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  ACCOUNTANT
+  MANAGER
+  VIEWER
+}
+
+enum InvoiceStatus {
+  DRAFT
+  PENDING
+  SENT
+  VIEWED
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  ONLINE
+  UPI
+  BANK_TRANSFER
+  CARD
+  CASH
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      Role     @default(OWNER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  invoices  Invoice[]
+  clients   Client[]
+}
+
+model Client {
+  id              String   @id @default(uuid())
+  name            String
+  email           String
+  phone           String?
+  gstNumber       String?
+  panNumber       String?
+  billingAddress  String?
+  shippingAddress String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  invoices  Invoice[]
+  payments  Payment[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  sku         String?  @unique
+  price       Float
+  taxCategory String?
+  unit        String?  @default("unit")
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  invoiceItems InvoiceItem[]
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  invoiceNumber String        @unique
+  status        InvoiceStatus @default(DRAFT)
+  issueDate     DateTime      @default(now())
+  dueDate       DateTime
+  subtotal      Float
+  taxTotal      Float
+  total         Float
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  clientId     String
+  client       Client        @relation(fields: [clientId], references: [id])
+  items        InvoiceItem[]
+  payments     Payment[]
+}
+
+model InvoiceItem {
+  id          String   @id @default(uuid())
+  quantity    Float    @default(1)
+  unitPrice   Float
+  total       Float
+  description String?
+
+  // Relations
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  amount        Float
+  paymentDate   DateTime      @default(now())
+  method        PaymentMethod
+  referenceId   String?
+  notes         String?
+  createdAt     DateTime      @default(now())
+
+  // Relations
+  invoiceId     String
+  invoice       Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  clientId      String
+  client        Client        @relation(fields: [clientId], references: [id])
+}
