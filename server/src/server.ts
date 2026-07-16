@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
+import clientRoutes from "./routes/client.routes";
 
 dotenv.config();
 
@@ -13,10 +14,9 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
-import authRoutes from "./routes/auth.routes";
-
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/clients", clientRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Ledgerly API is running" });

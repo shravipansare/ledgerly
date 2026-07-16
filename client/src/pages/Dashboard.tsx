@@ -1,4 +1,5 @@
 import { ShieldCheck, LayoutDashboard, Users, FileText, Settings, LogOut } from "lucide-react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 
 export default function Dashboard() {
@@ -13,6 +14,9 @@ export default function Dashboard() {
     return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
   };
 
+  const location = useLocation();
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <div className="min-h-screen flex bg-slate-50">
       {/* Sidebar */}
@@ -23,22 +27,22 @@ export default function Dashboard() {
         </div>
         
         <nav className="flex-1 p-4 flex flex-col gap-2">
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-md bg-blue-50 text-blue-700 font-medium">
+          <Link to="/dashboard" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
             <LayoutDashboard className="w-5 h-5" />
             Dashboard
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium transition-colors">
+          </Link>
+          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/invoices') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
             <FileText className="w-5 h-5" />
             Invoices
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium transition-colors">
+          </Link>
+          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/clients') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
             <Users className="w-5 h-5" />
             Clients
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium transition-colors">
+          </Link>
+          <Link to="/dashboard/settings" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/settings') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
             <Settings className="w-5 h-5" />
             Settings
-          </a>
+          </Link>
         </nav>
         
         <div className="p-4 border-t border-slate-200">
@@ -62,22 +66,26 @@ export default function Dashboard() {
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 p-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-              <h3 className="text-sm font-medium text-slate-500">Total Revenue</h3>
-              <p className="text-3xl font-bold text-slate-900 mt-2">$0.00</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-              <h3 className="text-sm font-medium text-slate-500">Outstanding Invoices</h3>
-              <p className="text-3xl font-bold text-slate-900 mt-2">0</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-              <h3 className="text-sm font-medium text-slate-500">Active Clients</h3>
-              <p className="text-3xl font-bold text-slate-900 mt-2">0</p>
+        {location.pathname === "/dashboard" ? (
+          <div className="flex-1 p-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h3 className="text-sm font-medium text-slate-500">Total Revenue</h3>
+                <p className="text-3xl font-bold text-slate-900 mt-2">$0.00</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h3 className="text-sm font-medium text-slate-500">Outstanding Invoices</h3>
+                <p className="text-3xl font-bold text-slate-900 mt-2">0</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h3 className="text-sm font-medium text-slate-500">Active Clients</h3>
+                <p className="text-3xl font-bold text-slate-900 mt-2">0</p>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <Outlet />
+        )}
       </main>
     </div>
   );
