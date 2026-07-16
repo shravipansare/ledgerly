@@ -1,4 +1,4 @@
-import { ShieldCheck, LayoutDashboard, Users, FileText, Settings, LogOut } from "lucide-react";
+import { ShieldCheck, LayoutDashboard, Users, FileText, Settings, LogOut, Package } from "lucide-react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 
@@ -31,13 +31,17 @@ export default function Dashboard() {
             <LayoutDashboard className="w-5 h-5" />
             Dashboard
           </Link>
-          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/invoices') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
+          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
             <FileText className="w-5 h-5" />
             Invoices
           </Link>
           <Link to="/dashboard/clients" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/clients') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
             <Users className="w-5 h-5" />
             Clients
+          </Link>
+          <Link to="/dashboard/products" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/products') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
+            <Package className="w-5 h-5" />
+            Products
           </Link>
           <Link to="/dashboard/settings" className={`flex items-center gap-3 px-3 py-2 rounded-md font-medium transition-colors ${isActive('/dashboard/settings') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}>
             <Settings className="w-5 h-5" />

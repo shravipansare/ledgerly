@@ -47,6 +47,7 @@ model User {
   // Relations
   invoices  Invoice[]
   clients   Client[]
+  products  Product[]
 }
 
 model Client {
@@ -81,6 +82,8 @@ model Product {
   updatedAt   DateTime @updatedAt
 
   // Relations
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
   invoiceItems InvoiceItem[]
 }
 

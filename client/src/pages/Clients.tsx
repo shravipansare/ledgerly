@@ -21,7 +21,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { getClients, createClient, updateClient, deleteClient, Client } from "@/lib/clientService";
+import { getClients, createClient, updateClient, deleteClient } from "@/lib/clientService";
+import type { Client } from "@/lib/clientService";
 
 export default function Clients() {
   const queryClient = useQueryClient();
