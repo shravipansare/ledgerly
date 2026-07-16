@@ -106,3 +106,31 @@ export const deleteInvoice = async (req: AuthRequest, res: Response): Promise<vo
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const updateInvoiceStatus = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const existing = await prisma.invoice.findUnique({ where: { id } });
+    if (!existing || existing.userId !== userId) {
+      res.status(404).json({ error: "Invoice not found" });
+      return;
+    }
+
+    const updated = await prisma.invoice.update({
+      where: { id },
+      data: { status },
+      include: {
+        client: true,
+        items: true,
+      },
+    });
+
+    res.json(updated);
+  } catch (error) {
+    console.error("Error updating invoice status:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

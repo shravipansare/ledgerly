@@ -43,3 +43,8 @@ export const getInvoiceById = async (id: string): Promise<Invoice> => {
 export const deleteInvoice = async (id: string): Promise<void> => {
   await api.delete(`/invoices/${id}`);
 };
+
+export const updateInvoiceStatus = async (id: string, status: string): Promise<Invoice> => {
+  const { data } = await api.patch(`/invoices/${id}/status`, { status });
+  return data;
+};

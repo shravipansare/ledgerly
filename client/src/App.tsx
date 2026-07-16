@@ -6,6 +6,7 @@ import Clients from "./pages/Clients";
 import Products from "./pages/Products";
 import Invoices from "./pages/Invoices";
 import CreateInvoice from "./pages/CreateInvoice";
+import InvoiceDetails from "./pages/InvoiceDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="products" element={<Products />} />
             <Route path="invoices" element={<Invoices />} />
             <Route path="invoices/new" element={<CreateInvoice />} />
+            <Route path="invoices/:id" element={<InvoiceDetails />} />
           </Route>
         </Route>
 
