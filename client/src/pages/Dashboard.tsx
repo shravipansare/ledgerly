@@ -52,7 +52,6 @@ export default function Dashboard() {
   };
 
   return (
-  return (
     <div className="min-h-screen flex bg-white font-sans text-black selection:bg-black selection:text-white">
       {/* Sidebar - Vercel Style */}
       <aside className="w-[240px] bg-white border-r border-gray-200 hidden md:flex flex-col z-20">
