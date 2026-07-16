@@ -50,16 +50,19 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
       <div className="absolute top-8 left-8 flex items-center gap-2 text-2xl font-bold tracking-tighter text-slate-900">
         <ShieldCheck className="w-8 h-8 text-blue-600" />
-        Ledgerly
+        MartechAdda
       </div>
       
       <Card className="w-full max-w-md shadow-lg border-slate-200">
         <form onSubmit={handleSubmit}>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Welcome back</CardTitle>
-            <CardDescription className="text-center">
-              Enter your email and password to access your workspace
-            </CardDescription>
+            <div className="flex flex-col space-y-2 text-center">
+              <ShieldCheck className="mx-auto h-10 w-10 text-blue-600" />
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Sign in to MartechAdda</h1>
+              <p className="text-sm text-slate-500">
+                Enter your email and password below to access your workspace
+              </p>
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             {error && (
