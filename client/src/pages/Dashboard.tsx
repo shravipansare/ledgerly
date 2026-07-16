@@ -52,182 +52,146 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#f8fafc] font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
-      {/* Sidebar - Modern Catalyst Style */}
-      <aside className="w-[280px] bg-slate-50 border-r border-slate-200 hidden md:flex flex-col z-20">
-        <div className="h-20 flex items-center gap-3 px-8 border-b border-slate-200/50">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20">
-            <ShieldCheck className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">MartechAdda</span>
+    <div className="min-h-screen flex bg-gray-50 font-sans text-gray-800">
+      {/* Sidebar - Enterprise Utility Style */}
+      <aside className="w-[220px] bg-white border-r border-gray-200 hidden md:flex flex-col z-20 shadow-[2px_0_8px_rgba(0,0,0,0.02)]">
+        <div className="h-14 flex items-center gap-2 px-5 border-b border-gray-200">
+          <ShieldCheck className="w-5 h-5 text-blue-600" />
+          <span className="text-base font-bold tracking-tight text-gray-900">MartechAdda</span>
         </div>
         
-        <nav className="flex-1 px-4 py-8 flex flex-col gap-1.5 overflow-y-auto">
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-4">Overview</div>
-          <Link to="/dashboard" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
+        <nav className="flex-1 py-4 flex flex-col overflow-y-auto">
+          <Link to="/dashboard" className={`flex items-center gap-3 px-5 py-2.5 text-sm transition-colors ${isActive('/dashboard') ? 'bg-blue-50/50 text-blue-700 border-l-4 border-blue-600 font-medium' : 'text-gray-600 hover:bg-gray-50 border-l-4 border-transparent'}`}>
             <LayoutDashboard className="w-4 h-4" />
             Dashboard
           </Link>
-          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-5 py-2.5 text-sm transition-colors ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-blue-50/50 text-blue-700 border-l-4 border-blue-600 font-medium' : 'text-gray-600 hover:bg-gray-50 border-l-4 border-transparent'}`}>
             <FileText className="w-4 h-4" />
             Invoices
           </Link>
-          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/clients') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-5 py-2.5 text-sm transition-colors ${isActive('/dashboard/clients') ? 'bg-blue-50/50 text-blue-700 border-l-4 border-blue-600 font-medium' : 'text-gray-600 hover:bg-gray-50 border-l-4 border-transparent'}`}>
             <Users className="w-4 h-4" />
-            Clients
+            Customers
           </Link>
-          <Link to="/dashboard/products" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/products') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/products" className={`flex items-center gap-3 px-5 py-2.5 text-sm transition-colors ${isActive('/dashboard/products') ? 'bg-blue-50/50 text-blue-700 border-l-4 border-blue-600 font-medium' : 'text-gray-600 hover:bg-gray-50 border-l-4 border-transparent'}`}>
             <Package className="w-4 h-4" />
-            Products & Services
+            Items
           </Link>
           
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 mt-8 px-4">Settings</div>
-          <Link to="/dashboard/settings" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/settings') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
-            <Settings className="w-4 h-4" />
-            Preferences
-          </Link>
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <Link to="/dashboard/settings" className={`flex items-center gap-3 px-5 py-2.5 text-sm transition-colors ${isActive('/dashboard/settings') ? 'bg-blue-50/50 text-blue-700 border-l-4 border-blue-600 font-medium' : 'text-gray-600 hover:bg-gray-50 border-l-4 border-transparent'}`}>
+              <Settings className="w-4 h-4" />
+              Settings
+            </Link>
+          </div>
         </nav>
         
-        <div className="p-4 m-4 mt-auto rounded-2xl bg-white border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-3 px-2 mb-4">
-            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm ring-4 ring-white shadow-sm">
+        <div className="p-4 border-t border-gray-200 bg-gray-50/50">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-medium text-xs">
               {getInitials()}
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-bold text-slate-900 truncate">{user?.firstName} {user?.lastName}</p>
-              <p className="text-xs text-slate-500 font-medium truncate">{user?.email}</p>
+              <p className="text-sm font-medium text-gray-900 truncate">{user?.firstName} {user?.lastName}</p>
             </div>
           </div>
-          <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border border-slate-200">
-            <LogOut className="w-4 h-4" />
+          <button onClick={handleLogout} className="w-full flex items-center gap-2 px-2 py-1.5 rounded-sm text-xs text-gray-600 hover:text-red-600 transition-colors">
+            <LogOut className="w-3.5 h-3.5" />
             Sign Out
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden bg-[#f8fafc]">
+      <main className="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50">
         {/* Header */}
-        <header className="h-20 bg-white/60 backdrop-blur-xl flex items-center justify-between px-10 flex-shrink-0 z-10 sticky top-0 border-b border-slate-200">
-          <div className="flex flex-col">
-            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Dashboard Overview</h1>
-            <p className="text-sm text-slate-500 font-medium mt-1">Here is what's happening with your finances today.</p>
+        <header className="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0 z-10 shadow-sm">
+          <div className="flex items-center">
+            <h1 className="text-lg font-medium text-gray-800">Dashboard</h1>
           </div>
-          <div className="flex items-center gap-6">
-            <button className="text-sm font-semibold text-slate-500 hover:text-blue-600 transition-colors">Help Center</button>
-            <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-blue-500/20 cursor-pointer hover:-translate-y-0.5 transition-transform">
+          <div className="flex items-center gap-4">
+            <button className="text-sm text-blue-600 hover:underline">Help</button>
+            <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-medium text-sm cursor-pointer border border-blue-200">
               {getInitials()}
             </div>
           </div>
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-auto relative z-0">
+        <div className="flex-1 overflow-auto relative z-0 p-6">
           {location.pathname === "/dashboard" ? (
-            <div className="p-10 max-w-[1400px] mx-auto space-y-8">
+            <div className="max-w-[1200px] mx-auto space-y-6">
               
               {/* Metrics Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Revenue</h3>
-                    <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
-                      <DollarSign className="w-5 h-5" />
-                    </div>
-                  </div>
-                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
-                    {isLoading ? "..." : formatCurrency(dashboardData?.metrics.totalRevenue || 0)}
-                  </p>
-                  <div className="mt-4 flex items-center text-sm font-semibold text-emerald-600 bg-emerald-50 w-fit px-2.5 py-1 rounded-lg">
-                    <span className="flex items-center gap-1">Collected successfully</span>
-                  </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Outstanding</h3>
-                    <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl">
-                      <Activity className="w-5 h-5" />
-                    </div>
-                  </div>
-                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div className="bg-white p-5 rounded-sm border border-gray-200 shadow-sm flex flex-col">
+                  <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Receivables</h3>
+                  <p className="text-2xl font-semibold text-gray-900">
                     {isLoading ? "..." : formatCurrency(dashboardData?.metrics.outstandingAmount || 0)}
                   </p>
-                  <div className="mt-4 flex items-center text-sm font-semibold text-amber-600 bg-amber-50 w-fit px-2.5 py-1 rounded-lg">
-                    <span className="flex items-center gap-1">Awaiting payment</span>
-                  </div>
+                  <p className="text-xs text-blue-600 mt-2 font-medium cursor-pointer hover:underline">View Outstanding Invoices →</p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Overdue</h3>
-                    <div className="p-2.5 bg-red-50 text-red-600 rounded-xl">
-                      <FileText className="w-5 h-5" />
-                    </div>
-                  </div>
-                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
+                <div className="bg-white p-5 rounded-sm border border-gray-200 shadow-sm flex flex-col">
+                  <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Total Revenue</h3>
+                  <p className="text-2xl font-semibold text-gray-900">
+                    {isLoading ? "..." : formatCurrency(dashboardData?.metrics.totalRevenue || 0)}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2 font-medium">Paid this fiscal year</p>
+                </div>
+
+                <div className="bg-white p-5 rounded-sm border border-gray-200 shadow-sm flex flex-col">
+                  <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Overdue</h3>
+                  <p className="text-2xl font-semibold text-red-600">
                     {isLoading ? "..." : formatCurrency(dashboardData?.metrics.overdueAmount || 0)}
                   </p>
-                  <div className="mt-4 flex items-center text-sm font-semibold text-red-600 bg-red-50 w-fit px-2.5 py-1 rounded-lg">
-                    <span className="flex items-center gap-1">Requires attention</span>
-                  </div>
+                  <p className="text-xs text-red-600 mt-2 font-medium cursor-pointer hover:underline">Send Reminders →</p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Active Clients</h3>
-                    <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
-                      <Users className="w-5 h-5" />
-                    </div>
-                  </div>
-                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
+                <div className="bg-white p-5 rounded-sm border border-gray-200 shadow-sm flex flex-col">
+                  <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Customers</h3>
+                  <p className="text-2xl font-semibold text-gray-900">
                     {isLoading ? "..." : (dashboardData?.metrics.totalClients || 0)}
                   </p>
-                  <div className="mt-4 flex items-center text-sm font-semibold text-slate-600 bg-slate-100 w-fit px-2.5 py-1 rounded-lg">
-                    <span className="flex items-center gap-1">Total in workspace</span>
-                  </div>
+                  <p className="text-xs text-blue-600 mt-2 font-medium cursor-pointer hover:underline" onClick={() => navigate('/dashboard/clients')}>Manage Customers →</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Revenue Chart */}
-                <div className="xl:col-span-2 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-                  <div className="mb-8">
-                    <h3 className="text-lg font-bold text-slate-900">Revenue Overview</h3>
-                    <p className="text-sm text-slate-500 font-medium mt-1">Earnings collected over the last 6 months</p>
+                <div className="lg:col-span-2 bg-white p-5 rounded-sm border border-gray-200 shadow-sm">
+                  <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                    <h3 className="text-sm font-semibold text-gray-800">Income and Expense</h3>
+                    <select className="text-xs border border-gray-300 rounded px-2 py-1 text-gray-600 bg-white cursor-pointer outline-none">
+                      <option>Last 6 Months</option>
+                    </select>
                   </div>
-                  <div className="h-[320px] w-full">
+                  <div className="h-[280px] w-full mt-4">
                     {isLoading ? (
-                      <div className="w-full h-full flex items-center justify-center text-slate-400 text-sm font-bold">Loading chart...</div>
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">Loading chart data...</div>
                     ) : (
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={dashboardData?.chartData || []} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-                          <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="#e2e8f0" />
+                        <BarChart data={dashboardData?.chartData || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                           <XAxis 
                             dataKey="name" 
                             axisLine={false} 
                             tickLine={false} 
-                            tick={{ fill: '#64748b', fontSize: 13, fontWeight: 600 }} 
-                            dy={15}
+                            tick={{ fill: '#6b7280', fontSize: 12 }} 
+                            dy={10}
                           />
                           <YAxis 
                             axisLine={false} 
                             tickLine={false} 
-                            tick={{ fill: '#64748b', fontSize: 13, fontWeight: 600 }}
+                            tick={{ fill: '#6b7280', fontSize: 12 }}
                             tickFormatter={(value) => `$${value}`}
                           />
                           <Tooltip 
-                            cursor={{ fill: '#f8fafc' }}
-                            contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', padding: '12px' }}
-                            formatter={(value: number) => [<span className="font-extrabold text-slate-900 text-lg">{formatCurrency(value)}</span>, <span className="text-slate-500 font-bold uppercase text-xs tracking-wider">Revenue</span>]}
+                            cursor={{ fill: '#f9fafb' }}
+                            contentStyle={{ borderRadius: '4px', border: '1px solid #d1d5db', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', padding: '8px 12px', fontSize: '12px' }}
+                            formatter={(value: number) => [<span className="font-semibold text-gray-900">{formatCurrency(value)}</span>, <span className="text-gray-500">Income</span>]}
                           />
-                          <defs>
-                            <linearGradient id="colorRevenueModern" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="0%" stopColor="#2563eb" stopOpacity={1}/>
-                              <stop offset="100%" stopColor="#4f46e5" stopOpacity={0.8}/>
-                            </linearGradient>
-                          </defs>
-                          <Bar dataKey="revenue" fill="url(#colorRevenueModern)" radius={[6, 6, 0, 0]} maxBarSize={48} />
+                          <Bar dataKey="revenue" fill="#3b82f6" radius={[2, 2, 0, 0]} maxBarSize={32} />
                         </BarChart>
                       </ResponsiveContainer>
                     )}
@@ -235,50 +199,50 @@ export default function Dashboard() {
                 </div>
 
                 {/* Recent Activity Table */}
-                <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
-                  <div className="flex items-center justify-between mb-8">
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-900">Recent Activity</h3>
-                      <p className="text-sm text-slate-500 font-medium mt-1">Latest generated invoices</p>
-                    </div>
-                    <Link to="/dashboard/invoices" className="text-sm font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-4 py-2 rounded-lg transition-colors">
-                      View All
-                    </Link>
+                <div className="bg-white rounded-sm border border-gray-200 shadow-sm flex flex-col">
+                  <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/50">
+                    <h3 className="text-sm font-semibold text-gray-800">Recent Transactions</h3>
                   </div>
-                  <div className="flex-1 overflow-y-auto space-y-4">
+                  <div className="flex-1 overflow-y-auto">
                     {isLoading ? (
-                      <div className="text-center text-slate-400 py-8 text-sm font-bold">Loading...</div>
+                      <div className="text-center text-gray-400 py-8 text-sm">Loading transactions...</div>
                     ) : dashboardData?.recentActivity?.length === 0 ? (
-                      <div className="text-center text-slate-400 py-8 text-sm font-bold">No recent activity</div>
+                      <div className="text-center text-gray-400 py-8 text-sm">No recent transactions</div>
                     ) : (
-                      dashboardData?.recentActivity?.map((invoice: any) => (
-                        <div 
-                          key={invoice.id} 
-                          onClick={() => navigate(`/dashboard/invoices`)}
-                          className="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 rounded-xl cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-white rounded-lg border border-slate-200 flex items-center justify-center shadow-sm text-slate-400 group-hover:text-blue-600 group-hover:border-blue-200 transition-colors">
-                              <FileText className="w-5 h-5" />
-                            </div>
+                      <div className="divide-y divide-gray-100">
+                        {dashboardData?.recentActivity?.map((invoice: any) => (
+                          <div 
+                            key={invoice.id} 
+                            onClick={() => navigate(`/dashboard/invoices`)}
+                            className="flex items-center justify-between p-4 hover:bg-blue-50/30 cursor-pointer transition-colors"
+                          >
                             <div>
-                              <p className="font-bold text-slate-900 text-sm">{invoice.client?.name}</p>
-                              <p className="text-xs font-semibold text-slate-500 mt-0.5">{invoice.invoiceNumber}</p>
+                              <p className="font-medium text-gray-900 text-sm hover:text-blue-600">{invoice.client?.name}</p>
+                              <div className="flex items-center gap-2 mt-1">
+                                <span className="text-xs text-gray-500">{invoice.invoiceNumber}</span>
+                                <span className="text-gray-300 text-xs">•</span>
+                                <span className="text-xs text-gray-500">{new Date(invoice.issueDate).toLocaleDateString()}</span>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-semibold text-gray-900 text-sm">{formatCurrency(invoice.total)}</p>
+                              <span className={`inline-block px-1.5 py-0.5 mt-1 rounded-sm text-[10px] font-medium border ${
+                                invoice.status === 'PAID' ? 'bg-green-50 text-green-700 border-green-200' :
+                                invoice.status === 'OVERDUE' ? 'bg-red-50 text-red-700 border-red-200' :
+                                'bg-gray-50 text-gray-600 border-gray-200'
+                              }`}>
+                                {invoice.status}
+                              </span>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <p className="font-extrabold text-slate-900 text-sm">{formatCurrency(invoice.total)}</p>
-                            <span className={`inline-block px-2 py-1 mt-1.5 rounded-md text-[10px] font-extrabold uppercase tracking-widest ${
-                              invoice.status === 'PAID' ? 'bg-emerald-100 text-emerald-700' :
-                              invoice.status === 'OVERDUE' ? 'bg-red-100 text-red-700' :
-                              'bg-slate-200 text-slate-700'
-                            }`}>
-                              {invoice.status}
-                            </span>
-                          </div>
-                        </div>
-                      ))
+                        ))}
+                      </div>
                     )}
+                  </div>
+                  <div className="p-3 border-t border-gray-100 text-center bg-gray-50/50">
+                     <Link to="/dashboard/invoices" className="text-xs text-blue-600 hover:underline font-medium">
+                        View All Invoices
+                     </Link>
                   </div>
                 </div>
               </div>
