@@ -55,7 +55,7 @@ export default function Invoices() {
         <Table>
           <TableHeader className="bg-slate-50 sticky top-0">
             <TableRow>
-              <TableHead>Invoice #</TableHead>
+              <TableHead>Invoice No.</TableHead>
               <TableHead>Client</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Status</TableHead>

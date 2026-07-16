@@ -123,7 +123,7 @@ export default function InvoiceDetails() {
           <div className="flex justify-between items-start mb-12 border-b border-slate-200 pb-8">
             <div>
               <h2 className="text-3xl font-extrabold text-blue-600 tracking-tight mb-1">INVOICE</h2>
-              <p className="text-slate-500 font-medium">#{invoice.invoiceNumber}</p>
+              <p className="text-slate-500 font-medium">No. {invoice.invoiceNumber}</p>
             </div>
             <div className="text-right">
               <h3 className="font-bold text-slate-800 text-lg">MartechAdda</h3>
