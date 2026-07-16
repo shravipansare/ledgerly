@@ -52,53 +52,53 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen flex bg-white font-sans text-black selection:bg-black selection:text-white">
-      {/* Sidebar - Vercel Style */}
-      <aside className="w-[240px] bg-white border-r border-gray-200 hidden md:flex flex-col z-20">
-        <div className="h-14 flex items-center gap-3 px-6 border-b border-gray-200">
-          <div className="w-6 h-6 bg-black rounded flex items-center justify-center">
-            <ShieldCheck className="w-4 h-4 text-white" />
+    <div className="min-h-screen flex bg-[#f8fafc] font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+      {/* Sidebar - Modern Catalyst Style */}
+      <aside className="w-[280px] bg-slate-50 border-r border-slate-200 hidden md:flex flex-col z-20">
+        <div className="h-20 flex items-center gap-3 px-8 border-b border-slate-200/50">
+          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20">
+            <ShieldCheck className="w-5 h-5 text-white" />
           </div>
-          <span className="text-sm font-semibold tracking-tight">MartechAdda</span>
+          <span className="text-xl font-bold tracking-tight text-slate-900">MartechAdda</span>
         </div>
         
-        <nav className="flex-1 px-3 py-6 flex flex-col gap-1 overflow-y-auto">
-          <Link to="/dashboard" className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive('/dashboard') ? 'bg-gray-100 text-black font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-black'}`}>
+        <nav className="flex-1 px-4 py-8 flex flex-col gap-1.5 overflow-y-auto">
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-4">Overview</div>
+          <Link to="/dashboard" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
             <LayoutDashboard className="w-4 h-4" />
             Dashboard
           </Link>
-          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-gray-100 text-black font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-black'}`}>
+          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
             <FileText className="w-4 h-4" />
             Invoices
           </Link>
-          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive('/dashboard/clients') ? 'bg-gray-100 text-black font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-black'}`}>
+          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/clients') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
             <Users className="w-4 h-4" />
             Clients
           </Link>
-          <Link to="/dashboard/products" className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive('/dashboard/products') ? 'bg-gray-100 text-black font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-black'}`}>
+          <Link to="/dashboard/products" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/products') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
             <Package className="w-4 h-4" />
-            Products
+            Products & Services
           </Link>
           
-          <div className="mt-4 pt-4 border-t border-gray-100">
-            <Link to="/dashboard/settings" className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive('/dashboard/settings') ? 'bg-gray-100 text-black font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-black'}`}>
-              <Settings className="w-4 h-4" />
-              Settings
-            </Link>
-          </div>
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 mt-8 px-4">Settings</div>
+          <Link to="/dashboard/settings" className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive('/dashboard/settings') ? 'bg-white shadow-sm border border-slate-200 text-blue-600' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent'}`}>
+            <Settings className="w-4 h-4" />
+            Preferences
+          </Link>
         </nav>
         
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 m-4 mt-auto rounded-2xl bg-white border border-slate-200 shadow-sm">
           <div className="flex items-center gap-3 px-2 mb-4">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-gray-800 to-black text-white flex items-center justify-center font-medium text-xs">
+            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm ring-4 ring-white shadow-sm">
               {getInitials()}
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-medium text-black truncate">{user?.firstName}</p>
-              <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+              <p className="text-sm font-bold text-slate-900 truncate">{user?.firstName} {user?.lastName}</p>
+              <p className="text-xs text-slate-500 font-medium truncate">{user?.email}</p>
             </div>
           </div>
-          <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-100 hover:text-black transition-colors">
+          <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border border-slate-200">
             <LogOut className="w-4 h-4" />
             Sign Out
           </button>
@@ -106,17 +106,16 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden bg-[#FAFAFA]">
+      <main className="flex-1 flex flex-col h-screen overflow-hidden bg-[#f8fafc]">
         {/* Header */}
-        <header className="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-8 flex-shrink-0 z-10">
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-gray-500">MartechAdda</span>
-            <span className="text-gray-300">/</span>
-            <span className="font-semibold text-black">Dashboard</span>
+        <header className="h-20 bg-white/60 backdrop-blur-xl flex items-center justify-between px-10 flex-shrink-0 z-10 sticky top-0 border-b border-slate-200">
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Dashboard Overview</h1>
+            <p className="text-sm text-slate-500 font-medium mt-1">Here is what's happening with your finances today.</p>
           </div>
-          <div className="flex items-center gap-4">
-            <button className="text-sm text-gray-600 hover:text-black transition-colors">Feedback</button>
-            <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-medium text-xs cursor-pointer hover:opacity-80 transition-opacity">
+          <div className="flex items-center gap-6">
+            <button className="text-sm font-semibold text-slate-500 hover:text-blue-600 transition-colors">Help Center</button>
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-blue-500/20 cursor-pointer hover:-translate-y-0.5 transition-transform">
               {getInitials()}
             </div>
           </div>
@@ -125,82 +124,110 @@ export default function Dashboard() {
         {/* Content Area */}
         <div className="flex-1 overflow-auto relative z-0">
           {location.pathname === "/dashboard" ? (
-            <div className="p-8 max-w-[1000px] mx-auto space-y-8">
+            <div className="p-10 max-w-[1400px] mx-auto space-y-8">
               
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold tracking-tight text-black">Overview</h2>
-              </div>
-
               {/* Metrics Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] flex flex-col hover:border-gray-300 transition-colors">
-                  <div className="flex items-center gap-2 text-gray-500 mb-3">
-                    <h3 className="text-sm font-medium">Total Revenue</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Revenue</h3>
+                    <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
+                      <DollarSign className="w-5 h-5" />
+                    </div>
                   </div>
-                  <p className="text-3xl font-semibold text-black tracking-tight">
+                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
                     {isLoading ? "..." : formatCurrency(dashboardData?.metrics.totalRevenue || 0)}
                   </p>
+                  <div className="mt-4 flex items-center text-sm font-semibold text-emerald-600 bg-emerald-50 w-fit px-2.5 py-1 rounded-lg">
+                    <span className="flex items-center gap-1">Collected successfully</span>
+                  </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] flex flex-col hover:border-gray-300 transition-colors">
-                  <div className="flex items-center gap-2 text-gray-500 mb-3">
-                    <h3 className="text-sm font-medium">Outstanding</h3>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Outstanding</h3>
+                    <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl">
+                      <Activity className="w-5 h-5" />
+                    </div>
                   </div>
-                  <p className="text-3xl font-semibold text-black tracking-tight">
+                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
                     {isLoading ? "..." : formatCurrency(dashboardData?.metrics.outstandingAmount || 0)}
                   </p>
+                  <div className="mt-4 flex items-center text-sm font-semibold text-amber-600 bg-amber-50 w-fit px-2.5 py-1 rounded-lg">
+                    <span className="flex items-center gap-1">Awaiting payment</span>
+                  </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] flex flex-col hover:border-gray-300 transition-colors">
-                  <div className="flex items-center gap-2 text-gray-500 mb-3">
-                    <h3 className="text-sm font-medium">Overdue</h3>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Overdue</h3>
+                    <div className="p-2.5 bg-red-50 text-red-600 rounded-xl">
+                      <FileText className="w-5 h-5" />
+                    </div>
                   </div>
-                  <p className="text-3xl font-semibold text-black tracking-tight">
+                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
                     {isLoading ? "..." : formatCurrency(dashboardData?.metrics.overdueAmount || 0)}
                   </p>
+                  <div className="mt-4 flex items-center text-sm font-semibold text-red-600 bg-red-50 w-fit px-2.5 py-1 rounded-lg">
+                    <span className="flex items-center gap-1">Requires attention</span>
+                  </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] flex flex-col hover:border-gray-300 transition-colors">
-                  <div className="flex items-center gap-2 text-gray-500 mb-3">
-                    <h3 className="text-sm font-medium">Clients</h3>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Active Clients</h3>
+                    <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+                      <Users className="w-5 h-5" />
+                    </div>
                   </div>
-                  <p className="text-3xl font-semibold text-black tracking-tight">
+                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
                     {isLoading ? "..." : (dashboardData?.metrics.totalClients || 0)}
                   </p>
+                  <div className="mt-4 flex items-center text-sm font-semibold text-slate-600 bg-slate-100 w-fit px-2.5 py-1 rounded-lg">
+                    <span className="flex items-center gap-1">Total in workspace</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
                 {/* Revenue Chart */}
-                <div className="lg:col-span-2 bg-white p-6 rounded-xl border border-gray-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)]">
+                <div className="xl:col-span-2 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="mb-8">
-                    <h3 className="text-sm font-semibold text-black">Revenue</h3>
+                    <h3 className="text-lg font-bold text-slate-900">Revenue Overview</h3>
+                    <p className="text-sm text-slate-500 font-medium mt-1">Earnings collected over the last 6 months</p>
                   </div>
-                  <div className="h-[250px] w-full">
+                  <div className="h-[320px] w-full">
                     {isLoading ? (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">Loading chart...</div>
+                      <div className="w-full h-full flex items-center justify-center text-slate-400 text-sm font-bold">Loading chart...</div>
                     ) : (
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={dashboardData?.chartData || []} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                          <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="#e2e8f0" />
                           <XAxis 
                             dataKey="name" 
                             axisLine={false} 
                             tickLine={false} 
-                            tick={{ fill: '#888', fontSize: 12 }} 
-                            dy={10}
+                            tick={{ fill: '#64748b', fontSize: 13, fontWeight: 600 }} 
+                            dy={15}
                           />
                           <YAxis 
                             axisLine={false} 
                             tickLine={false} 
-                            tick={{ fill: '#888', fontSize: 12 }}
+                            tick={{ fill: '#64748b', fontSize: 13, fontWeight: 600 }}
                             tickFormatter={(value) => `$${value}`}
                           />
                           <Tooltip 
-                            cursor={{ fill: '#fafafa' }}
-                            contentStyle={{ borderRadius: '8px', border: '1px solid #eaeaea', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}
-                            formatter={(value: number) => [<span className="font-semibold text-black">{formatCurrency(value)}</span>, <span className="text-gray-500 text-sm">Revenue</span>]}
+                            cursor={{ fill: '#f8fafc' }}
+                            contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', padding: '12px' }}
+                            formatter={(value: number) => [<span className="font-extrabold text-slate-900 text-lg">{formatCurrency(value)}</span>, <span className="text-slate-500 font-bold uppercase text-xs tracking-wider">Revenue</span>]}
                           />
-                          <Bar dataKey="revenue" fill="#000" radius={[4, 4, 0, 0]} maxBarSize={32} />
+                          <defs>
+                            <linearGradient id="colorRevenueModern" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#2563eb" stopOpacity={1}/>
+                              <stop offset="100%" stopColor="#4f46e5" stopOpacity={0.8}/>
+                            </linearGradient>
+                          </defs>
+                          <Bar dataKey="revenue" fill="url(#colorRevenueModern)" radius={[6, 6, 0, 0]} maxBarSize={48} />
                         </BarChart>
                       </ResponsiveContainer>
                     )}
@@ -208,32 +235,44 @@ export default function Dashboard() {
                 </div>
 
                 {/* Recent Activity Table */}
-                <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] flex flex-col">
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-sm font-semibold text-black">Recent Activity</h3>
-                    <Link to="/dashboard/invoices" className="text-xs text-gray-500 hover:text-black transition-colors">
+                <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                  <div className="flex items-center justify-between mb-8">
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900">Recent Activity</h3>
+                      <p className="text-sm text-slate-500 font-medium mt-1">Latest generated invoices</p>
+                    </div>
+                    <Link to="/dashboard/invoices" className="text-sm font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-4 py-2 rounded-lg transition-colors">
                       View All
                     </Link>
                   </div>
-                  <div className="flex-1 overflow-y-auto space-y-3">
+                  <div className="flex-1 overflow-y-auto space-y-4">
                     {isLoading ? (
-                      <div className="text-center text-gray-400 py-8 text-sm">Loading...</div>
+                      <div className="text-center text-slate-400 py-8 text-sm font-bold">Loading...</div>
                     ) : dashboardData?.recentActivity?.length === 0 ? (
-                      <div className="text-center text-gray-400 py-8 text-sm">No recent activity</div>
+                      <div className="text-center text-slate-400 py-8 text-sm font-bold">No recent activity</div>
                     ) : (
                       dashboardData?.recentActivity?.map((invoice: any) => (
                         <div 
                           key={invoice.id} 
                           onClick={() => navigate(`/dashboard/invoices`)}
-                          className="flex items-center justify-between py-2 cursor-pointer group"
+                          className="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 rounded-xl cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
                         >
-                          <div>
-                            <p className="font-medium text-black text-sm group-hover:underline decoration-gray-300 underline-offset-4">{invoice.client?.name}</p>
-                            <p className="text-xs text-gray-500 mt-1">{invoice.invoiceNumber}</p>
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-white rounded-lg border border-slate-200 flex items-center justify-center shadow-sm text-slate-400 group-hover:text-blue-600 group-hover:border-blue-200 transition-colors">
+                              <FileText className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-slate-900 text-sm">{invoice.client?.name}</p>
+                              <p className="text-xs font-semibold text-slate-500 mt-0.5">{invoice.invoiceNumber}</p>
+                            </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-medium text-black text-sm">{formatCurrency(invoice.total)}</p>
-                            <span className="text-xs text-gray-500 mt-1 block">
+                            <p className="font-extrabold text-slate-900 text-sm">{formatCurrency(invoice.total)}</p>
+                            <span className={`inline-block px-2 py-1 mt-1.5 rounded-md text-[10px] font-extrabold uppercase tracking-widest ${
+                              invoice.status === 'PAID' ? 'bg-emerald-100 text-emerald-700' :
+                              invoice.status === 'OVERDUE' ? 'bg-red-100 text-red-700' :
+                              'bg-slate-200 text-slate-700'
+                            }`}>
                               {invoice.status}
                             </span>
                           </div>
