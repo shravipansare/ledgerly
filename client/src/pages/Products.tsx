@@ -146,7 +146,7 @@ export default function Products() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="price">Price ($)</Label>
+                    <Label htmlFor="price">Price (₹)</Label>
                     <Input 
                       id="price" 
                       type="number"
@@ -224,7 +224,7 @@ export default function Products() {
                 <TableRow key={product.id}>
                   <TableCell className="font-medium text-slate-900">{product.name}</TableCell>
                   <TableCell className="text-slate-500 truncate max-w-[200px]">{product.description || "-"}</TableCell>
-                  <TableCell>${product.price.toFixed(2)}</TableCell>
+                  <TableCell>₹{product.price.toFixed(2)}</TableCell>
                   <TableCell>{product.taxCategory}%</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">

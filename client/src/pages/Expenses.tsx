@@ -114,7 +114,7 @@ export default function Expenses() {
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="amount">Amount ($) *</Label>
+                  <Label htmlFor="amount">Amount (₹) *</Label>
                   <Input 
                     id="amount"
                     type="number"
@@ -225,7 +225,7 @@ export default function Expenses() {
                   </TableCell>
                   <TableCell className="text-slate-600">{expense.description || "-"}</TableCell>
                   <TableCell className="text-right font-bold text-slate-900">
-                    ${expense.amount.toFixed(2)}
+                    ₹{expense.amount.toFixed(2)}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
