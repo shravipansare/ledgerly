@@ -22,7 +22,8 @@ export const sendInvoiceEmailService = async (params: SendInvoiceEmailParams): P
   const { to, clientName, invoiceNumber, totalAmount, pdfBase64 } = params;
 
   // Convert base64 string to buffer (strip data URI prefix if it exists)
-  const base64Data = pdfBase64.replace(/^data:application\/pdf;base64,/, "");
+  // pdf.output("datauristring") sometimes includes filename in the prefix, so split(',') is much safer.
+  const base64Data = pdfBase64.includes(',') ? pdfBase64.split(',')[1] : pdfBase64;
   const pdfBuffer = Buffer.from(base64Data, "base64");
 
   const mailOptions = {
