@@ -1,7 +1,7 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getInvoiceById, updateInvoiceStatus } from "@/lib/invoiceService";
-import { ArrowLeft, CheckCircle2, Download, Printer, Mail, MessageCircle, Share2, ChevronDown } from "lucide-react";
+import { getInvoiceById, updateInvoiceStatus, sendInvoiceEmail } from "@/lib/invoiceService";
+import { ArrowLeft, CheckCircle2, Download, Printer, Mail, MessageCircle, Share2, ChevronDown, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function InvoiceDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const invoiceRef = useRef<HTMLDivElement>(null);
+  const [isEmailSending, setIsEmailSending] = useState(false);
 
   const { data: invoice, isLoading } = useQuery({
     queryKey: ["invoice", id],
@@ -61,11 +62,43 @@ export default function InvoiceDetails() {
     pdf.save(`Invoice-${invoice?.invoiceNumber || 'Download'}.pdf`);
   };
 
-  const handleEmailShare = () => {
-    if (!invoice || !invoice.client) return;
-    const subject = encodeURIComponent(`Invoice No. ${invoice.invoiceNumber} from MartechAdda`);
-    const body = encodeURIComponent(`Hello ${invoice.client.name},\n\nPlease find your invoice No. ${invoice.invoiceNumber} for the total amount of $${invoice.total.toFixed(2)} attached to this email.\n\nThank you for your business!\n\nBest regards,\nMartechAdda`);
-    window.location.href = `mailto:${invoice.client.email}?subject=${subject}&body=${body}`;
+  const handleEmailShare = async () => {
+    if (!invoice || !invoice.client || !invoiceRef.current) return;
+    
+    setIsEmailSending(true);
+    try {
+      // 1. Generate the PDF
+      const canvas = await html2canvas(invoiceRef.current, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      });
+      
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      
+      // 2. Get base64 string
+      const pdfBase64 = pdf.output("datauristring");
+      
+      // 3. Send to our backend
+      await sendInvoiceEmail(invoice.id, pdfBase64);
+      
+      alert("Email sent successfully via SMTP!");
+    } catch (error: any) {
+      console.error("Error sending email:", error);
+      alert("Failed to send email: " + (error.response?.data?.error || error.message));
+    } finally {
+      setIsEmailSending(false);
+    }
   };
 
   const handleWhatsAppShare = () => {
@@ -129,9 +162,9 @@ export default function InvoiceDetails() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem onClick={handleEmailShare} className="cursor-pointer py-2">
-                <Mail className="w-4 h-4 mr-2" />
-                Send via Email
+              <DropdownMenuItem onClick={handleEmailShare} disabled={isEmailSending} className="cursor-pointer py-2">
+                {isEmailSending ? <Loader2 className="w-4 h-4 mr-2 animate-spin text-blue-600" /> : <Mail className="w-4 h-4 mr-2" />}
+                {isEmailSending ? "Sending..." : "Send via Email"}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleWhatsAppShare} className="cursor-pointer py-2 text-emerald-600 focus:text-emerald-700 focus:bg-emerald-50">
                 <MessageCircle className="w-4 h-4 mr-2" />

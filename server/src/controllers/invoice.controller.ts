@@ -134,3 +134,41 @@ export const updateInvoiceStatus = async (req: AuthRequest, res: Response): Prom
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+import { sendInvoiceEmailService } from "../services/email.service";
+
+export const sendInvoiceEmail = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+    const { pdfBase64 } = req.body;
+
+    if (!pdfBase64) {
+      res.status(400).json({ error: "PDF data is required" });
+      return;
+    }
+
+    const invoice = await prisma.invoice.findUnique({
+      where: { id },
+      include: { client: true },
+    });
+
+    if (!invoice || invoice.userId !== userId) {
+      res.status(404).json({ error: "Invoice not found" });
+      return;
+    }
+
+    await sendInvoiceEmailService({
+      to: invoice.client.email,
+      clientName: invoice.client.name,
+      invoiceNumber: invoice.invoiceNumber,
+      totalAmount: invoice.total,
+      pdfBase64,
+    });
+
+    res.json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error("Error sending invoice email:", error);
+    res.status(500).json({ error: "Failed to send email" });
+  }
+};

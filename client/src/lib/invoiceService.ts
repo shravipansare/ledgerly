@@ -48,3 +48,7 @@ export const updateInvoiceStatus = async (id: string, status: string): Promise<I
   const { data } = await api.patch(`/invoices/${id}/status`, { status });
   return data;
 };
+
+export const sendInvoiceEmail = async (id: string, pdfBase64: string): Promise<void> => {
+  await api.post(`/invoices/${id}/send-email`, { pdfBase64 });
+};

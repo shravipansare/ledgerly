@@ -137,8 +137,11 @@ export default function CreateInvoice() {
                   value={clientId}
                   onChange={(e) => setClientId(e.target.value)}
                   required
+                  disabled={clients.length === 0}
                 >
-                  <option value="" disabled>Select a client...</option>
+                  <option value="" disabled>
+                    {clients.length === 0 ? "No clients found - Create a client first!" : "Select a client..."}
+                  </option>
                   {clients.map(client => (
                     <option key={client.id} value={client.id}>{client.name} - {client.email}</option>
                   ))}

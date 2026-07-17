@@ -47,6 +47,9 @@ export default function Clients() {
       setIsDialogOpen(false);
       resetForm();
     },
+    onError: (error: any) => {
+      alert("Error saving client: " + (error.response?.data?.error || error.message));
+    }
   });
 
   const updateMutation = useMutation({
@@ -56,6 +59,9 @@ export default function Clients() {
       setIsDialogOpen(false);
       resetForm();
     },
+    onError: (error: any) => {
+      alert("Error updating client: " + (error.response?.data?.error || error.message));
+    }
   });
 
   const deleteMutation = useMutation({
@@ -83,6 +89,16 @@ export default function Clients() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.name.trim() || !formData.email.trim()) {
+      alert("Error: Company/Name and Email are required fields.");
+      return;
+    }
+    if (!formData.email.includes("@")) {
+      alert("Error: Please enter a valid email address containing '@'.");
+      return;
+    }
+
     if (editingClient) {
       updateMutation.mutate({ id: editingClient.id, data: formData });
     } else {
@@ -108,7 +124,7 @@ export default function Clients() {
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
-            <form onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-4">
               <DialogHeader>
                 <DialogTitle>{editingClient ? "Edit Client" : "Add Client"}</DialogTitle>
                 <DialogDescription>
@@ -117,20 +133,17 @@ export default function Clients() {
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="name">Company / Name</Label>
+                  <Label htmlFor="name">Company / Name *</Label>
                   <Input 
                     id="name" 
-                    required 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">Email *</Label>
                   <Input 
                     id="email" 
-                    type="email" 
-                    required 
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                   />
@@ -153,11 +166,15 @@ export default function Clients() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
+                <Button 
+                  type="button" 
+                  onClick={handleSubmit}
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                >
                   {createMutation.isPending || updateMutation.isPending ? "Saving..." : "Save changes"}
                 </Button>
               </DialogFooter>
-            </form>
+            </div>
           </DialogContent>
         </Dialog>
       </div>

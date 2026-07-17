@@ -19,11 +19,11 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle 401 Unauthorized (token expired)
+// Response interceptor to handle 401/403 Unauthorized (token expired)
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
       useAuthStore.getState().logout();
       window.location.href = "/login";
     }
