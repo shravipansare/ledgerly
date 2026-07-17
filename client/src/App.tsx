@@ -8,6 +8,7 @@ import Invoices from "./pages/Invoices";
 import CreateInvoice from "./pages/CreateInvoice";
 import InvoiceDetails from "./pages/InvoiceDetails";
 import Reports from "./pages/Reports";
+import Expenses from "./pages/Expenses";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="invoices" element={<Invoices />} />
             <Route path="invoices/new" element={<CreateInvoice />} />
             <Route path="invoices/:id" element={<InvoiceDetails />} />
+            <Route path="expenses" element={<Expenses />} />
             <Route path="reports" element={<Reports />} />
           </Route>
         </Route>

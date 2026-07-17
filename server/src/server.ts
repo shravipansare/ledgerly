@@ -8,6 +8,7 @@ import productRoutes from "./routes/product.routes";
 import invoiceRoutes from "./routes/invoice.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import reportRoutes from "./routes/report.routes";
+import expenseRoutes from "./routes/expense.routes";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/invoices", invoiceRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/expenses", expenseRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Ledgerly API is running" });

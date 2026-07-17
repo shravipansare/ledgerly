@@ -48,6 +48,7 @@ model User {
   invoices  Invoice[]
   clients   Client[]
   products  Product[]
+  expenses  Expense[]
 }
 
 model Client {
@@ -137,4 +138,30 @@ model Payment {
   invoice       Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
   clientId      String
   client        Client        @relation(fields: [clientId], references: [id])
+}
+
+enum ExpenseCategory {
+  SOFTWARE
+  MARKETING
+  SALARY
+  UTILITIES
+  OFFICE
+  TRAVEL
+  OTHER
+}
+
+model Expense {
+  id          String          @id @default(uuid())
+  amount      Float
+  date        DateTime        @default(now())
+  category    ExpenseCategory @default(OTHER)
+  merchant    String?
+  description String?
+  receiptUrl  String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  // Relations
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
