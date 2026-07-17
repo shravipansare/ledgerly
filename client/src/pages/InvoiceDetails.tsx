@@ -1,8 +1,14 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getInvoiceById, updateInvoiceStatus } from "@/lib/invoiceService";
-import { ArrowLeft, CheckCircle2, Download, Printer } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Download, Printer, Mail, MessageCircle, Share2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef } from "react";
@@ -55,6 +61,21 @@ export default function InvoiceDetails() {
     pdf.save(`Invoice-${invoice?.invoiceNumber || 'Download'}.pdf`);
   };
 
+  const handleEmailShare = () => {
+    if (!invoice || !invoice.client) return;
+    const subject = encodeURIComponent(`Invoice No. ${invoice.invoiceNumber} from MartechAdda`);
+    const body = encodeURIComponent(`Hello ${invoice.client.name},\n\nPlease find your invoice No. ${invoice.invoiceNumber} for the total amount of $${invoice.total.toFixed(2)} attached to this email.\n\nThank you for your business!\n\nBest regards,\nMartechAdda`);
+    window.location.href = `mailto:${invoice.client.email}?subject=${subject}&body=${body}`;
+  };
+
+  const handleWhatsAppShare = () => {
+    if (!invoice || !invoice.client) return;
+    const phone = invoice.client.phone ? invoice.client.phone.replace(/\D/g, '') : '';
+    const text = encodeURIComponent(`Hello ${invoice.client.name}, this is a reminder for Invoice No. ${invoice.invoiceNumber} for the amount of $${invoice.total.toFixed(2)}. Thank you for your business!`);
+    const url = phone ? `https://wa.me/${phone}?text=${text}` : `https://wa.me/?text=${text}`;
+    window.open(url, '_blank');
+  };
+
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center bg-[#f8fafc]">
@@ -99,6 +120,26 @@ export default function InvoiceDetails() {
         </div>
         
         <div className="flex items-center gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="border-slate-300 text-slate-700 bg-white hover:bg-slate-50 shadow-sm">
+                <Share2 className="w-4 h-4 mr-2" />
+                Share
+                <ChevronDown className="w-4 h-4 ml-2 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem onClick={handleEmailShare} className="cursor-pointer py-2">
+                <Mail className="w-4 h-4 mr-2" />
+                Send via Email
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleWhatsAppShare} className="cursor-pointer py-2 text-emerald-600 focus:text-emerald-700 focus:bg-emerald-50">
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Send via WhatsApp
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Button variant="outline" className="border-slate-300 text-slate-700 bg-white hover:bg-slate-50 shadow-sm" onClick={handleDownloadPDF}>
             <Download className="w-4 h-4 mr-2" />
             Download PDF
