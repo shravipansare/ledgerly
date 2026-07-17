@@ -104,7 +104,7 @@ export default function InvoiceDetails() {
   const handleWhatsAppShare = () => {
     if (!invoice || !invoice.client) return;
     const phone = invoice.client.phone ? invoice.client.phone.replace(/\D/g, '') : '';
-    const text = encodeURIComponent(`Hello ${invoice.client.name}, this is a reminder for Invoice No. ${invoice.invoiceNumber} for the amount of $${invoice.total.toFixed(2)}. Thank you for your business!`);
+    const text = encodeURIComponent(`Hello ${invoice.client.name}, this is a reminder for Invoice No. ${invoice.invoiceNumber} for the amount of ₹${invoice.total.toFixed(2)}. Thank you for your business!`);
     const url = phone ? `https://wa.me/${phone}?text=${text}` : `https://wa.me/?text=${text}`;
     window.open(url, '_blank');
   };
@@ -245,8 +245,8 @@ export default function InvoiceDetails() {
                   <tr key={item.id}>
                     <td className="py-4 px-4 text-slate-800 font-medium">{item.description}</td>
                     <td className="py-4 px-4 text-right text-slate-600">{item.quantity}</td>
-                    <td className="py-4 px-4 text-right text-slate-600">${item.unitPrice.toFixed(2)}</td>
-                    <td className="py-4 px-4 text-right text-slate-800 font-bold">${item.total.toFixed(2)}</td>
+                    <td className="py-4 px-4 text-right text-slate-600">₹{item.unitPrice.toFixed(2)}</td>
+                    <td className="py-4 px-4 text-right text-slate-800 font-bold">₹{item.total.toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -258,15 +258,15 @@ export default function InvoiceDetails() {
             <div className="w-72">
               <div className="flex justify-between py-2 text-sm text-slate-600">
                 <span>Subtotal</span>
-                <span className="font-medium">${invoice.subtotal.toFixed(2)}</span>
+                <span className="font-medium">₹{invoice.subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between py-2 text-sm text-slate-600 border-b border-slate-200 mb-2">
                 <span>Tax</span>
-                <span className="font-medium">${invoice.taxTotal.toFixed(2)}</span>
+                <span className="font-medium">₹{invoice.taxTotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between py-2 text-lg font-bold text-slate-800">
                 <span>Total</span>
-                <span>${invoice.total.toFixed(2)}</span>
+                <span>₹{invoice.total.toFixed(2)}</span>
               </div>
               
               {isPaid && (

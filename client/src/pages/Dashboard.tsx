@@ -229,7 +229,7 @@ export default function Dashboard() {
                             axisLine={false} 
                             tickLine={false} 
                             tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
-                            tickFormatter={(value) => `$${value}`}
+                            tickFormatter={(value) => `₹${value}`}
                           />
                           <Tooltip 
                             cursor={{ fill: '#f8fafc' }}

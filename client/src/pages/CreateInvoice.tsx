@@ -259,7 +259,7 @@ export default function CreateInvoice() {
                         />
                       </td>
                       <td className="px-4 py-3 font-medium text-slate-900">
-                        ${item.total.toFixed(2)}
+                        ₹{item.total.toFixed(2)}
                       </td>
                       <td className="px-4 py-3">
                         <Button 
@@ -284,15 +284,15 @@ export default function CreateInvoice() {
               <div className="w-64 space-y-3">
                 <div className="flex justify-between text-sm text-slate-500">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-slate-500">
                   <span>Estimated Tax</span>
-                  <span>${taxTotal.toFixed(2)}</span>
+                  <span>₹{taxTotal.toFixed(2)}</span>
                 </div>
                 <div className="pt-3 border-t border-slate-200 flex justify-between font-bold text-lg text-slate-900">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>₹{total.toFixed(2)}</span>
                 </div>
               </div>
             </div>
