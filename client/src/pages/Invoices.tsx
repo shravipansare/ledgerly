@@ -89,7 +89,7 @@ export default function Invoices() {
                       {invoice.status}
                     </span>
                   </TableCell>
-                  <TableCell className="text-right font-medium">₹{invoice.total.toFixed(2)}</TableCell>
+                  <TableCell className="text-right font-medium">${invoice.total.toFixed(2)}</TableCell>
                 </TableRow>
               ))
             )}

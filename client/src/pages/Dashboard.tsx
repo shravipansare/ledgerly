@@ -23,7 +23,7 @@ export default function Dashboard() {
 
   const getInitials = () => {
     if (!user) return "U";
-    return `₹{user.firstName.charAt(0)}₹{user.lastName.charAt(0)}`.toUpperCase();
+    return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
   };
 
   const location = useLocation();
@@ -64,33 +64,33 @@ export default function Dashboard() {
         
         <nav className="flex-1 py-6 flex flex-col gap-1 overflow-y-auto px-3">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 px-3">Main Menu</div>
-          <Link to="/dashboard" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ₹{isActive('/dashboard') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <LayoutDashboard className="w-[18px] h-[18px]" />
             Dashboard
           </Link>
-          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ₹{isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <FileText className="w-[18px] h-[18px]" />
             Invoices
           </Link>
-          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ₹{isActive('/dashboard/clients') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/clients') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <Users className="w-[18px] h-[18px]" />
             Customers
           </Link>
-          <Link to="/dashboard/products" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ₹{isActive('/dashboard/products') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/products" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/products') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <Package className="w-[18px] h-[18px]" />
             Items
           </Link>
-          <Link to="/dashboard/expenses" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ₹{isActive('/dashboard/expenses') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/expenses" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/expenses') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <Receipt className="w-[18px] h-[18px]" />
             Expenses
           </Link>
-          <Link to="/dashboard/reports" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ₹{isActive('/dashboard/reports') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/reports" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/reports') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <PieChart className="w-[18px] h-[18px]" />
             Reports
           </Link>
           
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 mt-6 px-3">System</div>
-          <Link to="/dashboard/settings" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ₹{isActive('/dashboard/settings') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+          <Link to="/dashboard/settings" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/settings') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <Settings className="w-[18px] h-[18px]" />
             Settings
           </Link>
@@ -229,7 +229,7 @@ export default function Dashboard() {
                             axisLine={false} 
                             tickLine={false} 
                             tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
-                            tickFormatter={(value) => `₹₹{value}`}
+                            tickFormatter={(value) => `$${value}`}
                           />
                           <Tooltip 
                             cursor={{ fill: '#f8fafc' }}
@@ -277,7 +277,7 @@ export default function Dashboard() {
                             </div>
                             <div className="text-right">
                               <p className="font-bold text-slate-900 text-[15px]">{formatCurrency(invoice.total)}</p>
-                              <span className={`inline-block px-2 py-0.5 mt-1.5 rounded-md text-[11px] font-bold border ₹{
+                              <span className={`inline-block px-2 py-0.5 mt-1.5 rounded-md text-[11px] font-bold border ${
                                 invoice.status === 'PAID' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
                                 invoice.status === 'OVERDUE' ? 'bg-red-50 text-red-700 border-red-200' :
                                 'bg-slate-100 text-slate-600 border-slate-200'
