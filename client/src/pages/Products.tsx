@@ -23,6 +23,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { getProducts, createProduct, updateProduct, deleteProduct } from "@/lib/productService";
 import type { Product } from "@/lib/productService";
+import { getTaxes } from "@/lib/taxService";
 
 export default function Products() {
   const queryClient = useQueryClient();
@@ -41,6 +42,11 @@ export default function Products() {
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: getProducts,
+  });
+
+  const { data: taxes = [] } = useQuery({
+    queryKey: ["taxes"],
+    queryFn: getTaxes,
   });
 
   const createMutation = useMutation({
@@ -157,13 +163,20 @@ export default function Products() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="taxCategory">Tax Rate (%)</Label>
-                    <Input 
+                    <Label htmlFor="taxCategory">Tax Rate</Label>
+                    <select 
                       id="taxCategory" 
-                      type="number"
+                      className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
                       value={formData.taxCategory}
                       onChange={(e) => setFormData({...formData, taxCategory: e.target.value})}
-                    />
+                    >
+                      <option value="">No Tax (0%)</option>
+                      {taxes.map((tax: any) => (
+                        <option key={tax.id} value={tax.id}>
+                          {tax.name} ({tax.rate}%)
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="grid gap-2">
@@ -225,7 +238,9 @@ export default function Products() {
                   <TableCell className="font-medium text-slate-900">{product.name}</TableCell>
                   <TableCell className="text-slate-500 truncate max-w-[200px]">{product.description || "-"}</TableCell>
                   <TableCell>₹{product.price.toFixed(2)}</TableCell>
-                  <TableCell>{product.taxCategory}%</TableCell>
+                  <TableCell>
+                    {taxes.find((t: any) => t.id === product.taxCategory)?.name || (product.taxCategory && !taxes.find((t: any) => t.id === product.taxCategory) ? `${product.taxCategory}% (Legacy)` : "None")}
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Button variant="ghost" size="icon" onClick={() => handleEdit(product)}>

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getClients } from "@/lib/clientService";
 import { getProducts } from "@/lib/productService";
+import { getTaxes } from "@/lib/taxService";
 import { createInvoice } from "@/lib/invoiceService";
 
 export default function CreateInvoice() {
@@ -19,11 +20,12 @@ export default function CreateInvoice() {
   const [dueDate, setDueDate] = useState("");
   const [notes, setNotes] = useState("");
   const [items, setItems] = useState<any[]>([
-    { id: 1, productId: "", description: "", quantity: 1, unitPrice: 0, total: 0 }
+    { id: 1, productId: "", description: "", quantity: 1, unitPrice: 0, total: 0, taxRateId: "" }
   ]);
 
   const { data: clients = [] } = useQuery({ queryKey: ["clients"], queryFn: getClients });
   const { data: products = [] } = useQuery({ queryKey: ["products"], queryFn: getProducts });
+  const { data: taxes = [] } = useQuery({ queryKey: ["taxes"], queryFn: getTaxes });
 
   const createMutation = useMutation({
     mutationFn: createInvoice,
@@ -42,10 +44,15 @@ export default function CreateInvoice() {
       const itemSubtotal = item.quantity * item.unitPrice;
       sub += itemSubtotal;
       
-      const product = products.find(p => p.id === item.productId);
-      if (product && product.taxCategory) {
-        const taxRate = parseFloat(product.taxCategory);
-        tax += itemSubtotal * (taxRate / 100);
+      const taxRateObj = taxes.find((t: any) => t.id === item.taxRateId);
+      if (taxRateObj) {
+        tax += itemSubtotal * (taxRateObj.rate / 100);
+      } else {
+        // Fallback for legacy items that don't have a taxRateId set but might rely on product
+        const product = products.find((p: any) => p.id === item.productId);
+        if (product && product.taxCategory && !isNaN(parseFloat(product.taxCategory))) {
+           tax += itemSubtotal * (parseFloat(product.taxCategory) / 100);
+        }
       }
     });
 
@@ -54,10 +61,10 @@ export default function CreateInvoice() {
       taxTotal: tax,
       total: sub + tax
     };
-  }, [items, products]);
+  }, [items, products, taxes]);
 
   const handleAddItem = () => {
-    setItems([...items, { id: Date.now(), productId: "", description: "", quantity: 1, unitPrice: 0, total: 0 }]);
+    setItems([...items, { id: Date.now(), productId: "", description: "", quantity: 1, unitPrice: 0, total: 0, taxRateId: "" }]);
   };
 
   const handleRemoveItem = (id: number) => {
@@ -71,12 +78,16 @@ export default function CreateInvoice() {
       if (item.id === id) {
         const updated = { ...item, [field]: value };
         
-        // Auto-fill price and description if product is selected
+        // Auto-fill price, description, and tax if product is selected
         if (field === "productId") {
-          const product = products.find(p => p.id === value);
+          const product = products.find((p: any) => p.id === value);
           if (product) {
             updated.unitPrice = product.price;
             updated.description = product.name;
+            // Check if product's taxCategory is an ID that exists in taxes
+            if (taxes.find((t: any) => t.id === product.taxCategory)) {
+              updated.taxRateId = product.taxCategory;
+            }
           }
         }
         
@@ -105,13 +116,18 @@ export default function CreateInvoice() {
       taxTotal,
       total,
       status: "DRAFT",
-      items: items.map(item => ({
-        productId: item.productId || undefined,
-        description: item.description,
-        quantity: parseFloat(item.quantity),
-        unitPrice: parseFloat(item.unitPrice),
-        total: parseFloat(item.total)
-      }))
+      items: items.map(item => {
+        const taxRateObj = taxes.find((t: any) => t.id === item.taxRateId);
+        return {
+          productId: item.productId || undefined,
+          description: item.description,
+          quantity: parseFloat(item.quantity),
+          unitPrice: parseFloat(item.unitPrice),
+          total: parseFloat(item.total),
+          appliedTaxName: taxRateObj ? taxRateObj.name : undefined,
+          appliedTaxRate: taxRateObj ? taxRateObj.rate : undefined,
+        };
+      })
     });
   };
 
@@ -206,11 +222,12 @@ export default function CreateInvoice() {
               <table className="w-full text-sm text-left">
                 <thead className="bg-slate-50 text-slate-500 font-medium">
                   <tr>
-                    <th className="px-4 py-3 w-1/4">Product/Service</th>
-                    <th className="px-4 py-3 w-1/3">Description</th>
-                    <th className="px-4 py-3 w-24">Qty</th>
-                    <th className="px-4 py-3 w-32">Price</th>
-                    <th className="px-4 py-3 w-32">Total</th>
+                    <th className="px-4 py-3 w-[20%]">Product/Service</th>
+                    <th className="px-4 py-3 w-[25%]">Description</th>
+                    <th className="px-4 py-3 w-20">Qty</th>
+                    <th className="px-4 py-3 w-24">Price</th>
+                    <th className="px-4 py-3 w-[15%]">Tax</th>
+                    <th className="px-4 py-3 w-24">Total</th>
                     <th className="px-4 py-3 w-12"></th>
                   </tr>
                 </thead>
@@ -257,6 +274,18 @@ export default function CreateInvoice() {
                           onChange={(e) => handleItemChange(item.id, "unitPrice", e.target.value)}
                           required
                         />
+                      </td>
+                      <td className="px-4 py-3">
+                        <select 
+                          className="flex h-9 w-full rounded-md border border-slate-200 bg-white px-3 py-1 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                          value={item.taxRateId || ""}
+                          onChange={(e) => handleItemChange(item.id, "taxRateId", e.target.value)}
+                        >
+                          <option value="">No Tax</option>
+                          {taxes.map((t: any) => (
+                            <option key={t.id} value={t.id}>{t.name}</option>
+                          ))}
+                        </select>
                       </td>
                       <td className="px-4 py-3 font-medium text-slate-900">
                         ₹{item.total.toFixed(2)}

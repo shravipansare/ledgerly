@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenticate } from "../middleware/auth.middleware";
+import { authenticateToken } from "../middleware/auth.middleware";
 import {
   getQuotations,
   createQuotation,
@@ -11,7 +11,7 @@ import {
 
 const router = Router();
 
-router.use(authenticate);
+router.use(authenticateToken);
 
 router.get("/", getQuotations);
 router.post("/", createQuotation);

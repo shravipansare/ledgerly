@@ -14,6 +14,7 @@ import Quotations from "./pages/Quotations";
 import CreateQuotation from "./pages/CreateQuotation";
 import QuotationDetails from "./pages/QuotationDetails";
 import Expenses from "./pages/Expenses";
+import Settings from "./pages/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="invoices/:id" element={<InvoiceDetails />} />
             <Route path="expenses" element={<Expenses />} />
             <Route path="reports" element={<Reports />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Route>
 

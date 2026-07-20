@@ -72,6 +72,7 @@ model User {
   clients    Client[]
   products   Product[]
   expenses   Expense[]
+  taxes      TaxRate[]
 }
 
 model Client {
@@ -141,6 +142,10 @@ model InvoiceItem {
   unitPrice   Float
   total       Float
   description String?
+  
+  // Advanced Taxes
+  appliedTaxName String?
+  appliedTaxRate Float?
 
   // Relations
   invoiceId   String   @db.ObjectId
@@ -181,6 +186,19 @@ model Expense {
   user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model TaxRate {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  rate        Float
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model Quotation {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
   quotationNumber String        @unique
@@ -208,6 +226,10 @@ model QuotationItem {
   unitPrice   Float
   total       Float
   description String?
+  
+  // Advanced Taxes
+  appliedTaxName String?
+  appliedTaxRate Float?
 
   // Relations
   quotationId String    @db.ObjectId

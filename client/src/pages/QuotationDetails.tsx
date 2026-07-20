@@ -209,9 +209,10 @@ export default function QuotationDetails() {
             <table className="w-full text-sm text-left">
               <thead className="bg-slate-50 text-slate-600 text-xs uppercase font-bold border-y border-slate-200">
                 <tr>
-                  <th className="py-3 px-4 w-[50%]">Description</th>
+                  <th className="py-3 px-4 w-[40%]">Description</th>
                   <th className="py-3 px-4 text-right">Qty</th>
                   <th className="py-3 px-4 text-right">Rate</th>
+                  <th className="py-3 px-4 text-right">Tax</th>
                   <th className="py-3 px-4 text-right">Amount</th>
                 </tr>
               </thead>
@@ -221,6 +222,7 @@ export default function QuotationDetails() {
                     <td className="py-4 px-4 text-slate-800 font-medium">{item.description}</td>
                     <td className="py-4 px-4 text-right text-slate-600">{item.quantity}</td>
                     <td className="py-4 px-4 text-right text-slate-600">₹{item.unitPrice.toFixed(2)}</td>
+                    <td className="py-4 px-4 text-right text-slate-500 text-xs">{item.appliedTaxName || "-"}</td>
                     <td className="py-4 px-4 text-right text-slate-800 font-bold">₹{item.total.toFixed(2)}</td>
                   </tr>
                 ))}
