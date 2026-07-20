@@ -54,55 +54,55 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen flex bg-[#f8fafc] font-sans text-slate-800">
       {/* Sidebar - Polished Enterprise Style */}
-      <aside className="w-[240px] bg-white border-r border-slate-200 hidden md:flex flex-col z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-        <div className="h-16 flex items-center gap-3 px-6 border-b border-slate-100">
-          <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center shadow-sm shadow-blue-600/20">
-            <ShieldCheck className="w-4 h-4 text-white" />
+      <aside className="w-[240px] bg-white/80 backdrop-blur-md border-r border-slate-200/50 hidden md:flex flex-col z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+        <div className="h-16 flex items-center gap-3 px-6 border-b border-slate-100/50">
+          <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md shadow-indigo-500/20">
+            <ShieldCheck className="w-5 h-5 text-white" />
           </div>
           <span className="text-[17px] font-bold tracking-tight text-slate-900">MartechAdda</span>
         </div>
         
         <nav className="flex-1 py-6 flex flex-col gap-1 overflow-y-auto px-3">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 px-3">Main Menu</div>
-          <Link to="/dashboard" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <LayoutDashboard className="w-[18px] h-[18px]" />
+          <Link to="/dashboard" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <LayoutDashboard className={`w-[18px] h-[18px] ${isActive('/dashboard') ? 'text-indigo-600' : ''}`} />
             Dashboard
           </Link>
-          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <FileText className="w-[18px] h-[18px]" />
+          <Link to="/dashboard/invoices" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/invoices') || isActive('/dashboard/invoices/new') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <FileText className={`w-[18px] h-[18px] ${isActive('/dashboard/invoices') ? 'text-indigo-600' : ''}`} />
             Invoices
           </Link>
-          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/clients') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <Users className="w-[18px] h-[18px]" />
+          <Link to="/dashboard/clients" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/clients') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <Users className={`w-[18px] h-[18px] ${isActive('/dashboard/clients') ? 'text-indigo-600' : ''}`} />
             Customers
           </Link>
-          <Link to="/dashboard/products" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/products') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <Package className="w-[18px] h-[18px]" />
+          <Link to="/dashboard/products" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/products') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <Package className={`w-[18px] h-[18px] ${isActive('/dashboard/products') ? 'text-indigo-600' : ''}`} />
             Products & Services
           </Link>
-          <Link to="/dashboard/quotations" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/quotations') || isActive('/dashboard/quotations/new') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <FileSignature className="w-[18px] h-[18px]" />
+          <Link to="/dashboard/quotations" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/quotations') || isActive('/dashboard/quotations/new') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <FileSignature className={`w-[18px] h-[18px] ${isActive('/dashboard/quotations') ? 'text-indigo-600' : ''}`} />
             Quotations
           </Link>
-          <Link to="/dashboard/expenses" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/expenses') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <Receipt className="w-[18px] h-[18px]" />
+          <Link to="/dashboard/expenses" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/expenses') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <Receipt className={`w-[18px] h-[18px] ${isActive('/dashboard/expenses') ? 'text-indigo-600' : ''}`} />
             Expenses
           </Link>
-          <Link to="/dashboard/reports" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/reports') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <PieChart className="w-[18px] h-[18px]" />
+          <Link to="/dashboard/reports" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/reports') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <PieChart className={`w-[18px] h-[18px] ${isActive('/dashboard/reports') ? 'text-indigo-600' : ''}`} />
             Reports
           </Link>
           
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 mt-6 px-3">System</div>
-          <Link to="/dashboard/settings" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all mt-auto ${isActive('/dashboard/settings') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
-            <Settings className="w-[18px] h-[18px]" />
+          <Link to="/dashboard/settings" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all mt-auto ${isActive('/dashboard/settings') ? 'bg-gradient-to-r from-indigo-50 to-purple-50/50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <Settings className={`w-[18px] h-[18px] ${isActive('/dashboard/settings') ? 'text-indigo-600' : ''}`} />
             Settings
           </Link>
         </nav>
         
-        <div className="p-4 border-t border-slate-100 bg-slate-50/50 m-3 rounded-xl">
+        <div className="p-4 border-t border-slate-100/50 bg-slate-50/30 m-3 rounded-xl">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-600 to-purple-700 text-white flex items-center justify-center font-bold text-xs shadow-md">
               {getInitials()}
             </div>
             <div className="flex-1 overflow-hidden">
@@ -117,11 +117,11 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden bg-[#f8fafc]">
+      <main className="flex-1 flex flex-col h-screen overflow-hidden mesh-bg">
         {/* Header */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 flex-shrink-0 z-10 shadow-sm/50">
+        <header className="h-16 bg-white/60 backdrop-blur-md border-b border-slate-200/50 flex items-center justify-between px-8 flex-shrink-0 z-10 shadow-sm/50">
           <div className="flex items-center">
-            <h1 className="text-xl font-bold text-slate-800">Financial Overview</h1>
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">Financial Overview</h1>
           </div>
           <div className="flex items-center gap-5">
             <button className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Help & Support</button>
@@ -131,148 +131,78 @@ export default function Dashboard() {
           </div>
         </header>
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-auto relative z-0 p-8">
+        {/* Page Content with Animation Wrapper */}
+        <div className="flex-1 overflow-auto animate-fade-in relative z-0">
           {location.pathname === "/dashboard" ? (
-            <div className="max-w-[1200px] mx-auto space-y-8">
+            <div className="p-8 max-w-7xl mx-auto space-y-6">
               
-              {/* Metrics Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                     <Activity className="w-16 h-16 text-blue-600" />
-                  </div>
-                  <div className="flex items-center gap-3 mb-3 relative z-10">
-                    <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-                      <Activity className="w-4 h-4" />
+              {/* Stats Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { label: "Total Revenue", value: dashboardData?.metrics?.totalRevenue || 0, icon: DollarSign, color: "text-indigo-600", bg: "bg-indigo-50", delay: "0.1s" },
+                  { label: "Outstanding", value: dashboardData?.metrics?.outstandingAmount || 0, icon: Activity, color: "text-orange-600", bg: "bg-orange-50", delay: "0.2s" },
+                  { label: "Paid Invoices", value: dashboardData?.metrics?.paidCount || 0, icon: FileText, color: "text-emerald-600", bg: "bg-emerald-50", delay: "0.3s" },
+                  { label: "Active Clients", value: dashboardData?.metrics?.totalClients || 0, icon: Users, color: "text-purple-600", bg: "bg-purple-50", delay: "0.4s" },
+                ].map((stat, i) => (
+                  <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:-translate-y-1 transition-all duration-300 animate-slide-up" style={{ animationDelay: stat.delay }}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className={`p-2 ${stat.bg} ${stat.color} rounded-lg`}>
+                        <stat.icon className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{stat.label}</h3>
                     </div>
-                    <h3 className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">Receivables</h3>
+                    <p className="text-2xl font-extrabold text-slate-900">
+                      {isLoading ? "..." : stat.label === "Total Revenue" || stat.label === "Outstanding" ? formatCurrency(stat.value) : stat.value}
+                    </p>
                   </div>
-                  <p className="text-[28px] font-extrabold text-slate-900 relative z-10">
-                    {isLoading ? "..." : formatCurrency(dashboardData?.metrics.outstandingAmount || 0)}
-                  </p>
-                  <p className="text-xs text-blue-600 mt-2 font-medium cursor-pointer hover:underline relative z-10">View Outstanding Invoices →</p>
-                </div>
-
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                     <DollarSign className="w-16 h-16 text-emerald-600" />
-                  </div>
-                  <div className="flex items-center gap-3 mb-3 relative z-10">
-                    <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
-                      <DollarSign className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">Total Revenue</h3>
-                  </div>
-                  <p className="text-[28px] font-extrabold text-slate-900 relative z-10">
-                    {isLoading ? "..." : formatCurrency(dashboardData?.metrics.totalRevenue || 0)}
-                  </p>
-                  <p className="text-xs text-emerald-600 mt-2 font-medium relative z-10">Paid this fiscal year</p>
-                </div>
-
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                     <FileText className="w-16 h-16 text-red-600" />
-                  </div>
-                  <div className="flex items-center gap-3 mb-3 relative z-10">
-                    <div className="p-2 bg-red-50 text-red-600 rounded-lg">
-                      <FileText className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">Overdue</h3>
-                  </div>
-                  <p className="text-[28px] font-extrabold text-red-600 relative z-10">
-                    {isLoading ? "..." : formatCurrency(dashboardData?.metrics.overdueAmount || 0)}
-                  </p>
-                  <p className="text-xs text-red-600 mt-2 font-medium cursor-pointer hover:underline relative z-10">Send Reminders →</p>
-                </div>
-
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                     <Users className="w-16 h-16 text-indigo-600" />
-                  </div>
-                  <div className="flex items-center gap-3 mb-3 relative z-10">
-                    <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
-                      <Users className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">Customers</h3>
-                  </div>
-                  <p className="text-[28px] font-extrabold text-slate-900 relative z-10">
-                    {isLoading ? "..." : (dashboardData?.metrics.totalClients || 0)}
-                  </p>
-                  <p className="text-xs text-indigo-600 mt-2 font-medium cursor-pointer hover:underline relative z-10" onClick={() => navigate('/dashboard/clients')}>Manage Customers →</p>
-                </div>
+                ))}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Revenue Chart */}
-                <div className="lg:col-span-2 bg-white p-7 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+              {/* Main Charts & Lists */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-slide-up" style={{ animationDelay: "0.5s" }}>
+                {/* Chart Area */}
+                <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200">
+                  <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h3 className="text-base font-bold text-slate-800">Income and Expense</h3>
-                      <p className="text-sm text-slate-500 mt-0.5">Last 6 months of financial activity</p>
+                      <h3 className="text-lg font-bold text-slate-900 tracking-tight">Revenue Overview</h3>
+                      <p className="text-sm text-slate-500">Monthly revenue for the last 6 months</p>
                     </div>
-                    <select className="text-sm border border-slate-200 rounded-lg px-3 py-1.5 text-slate-600 bg-slate-50 font-medium cursor-pointer outline-none hover:bg-slate-100 transition-colors">
-                      <option>Last 6 Months</option>
-                    </select>
                   </div>
-                  <div className="h-[300px] w-full mt-6">
+                  <div className="h-[300px] w-full">
                     {isLoading ? (
-                      <div className="w-full h-full flex items-center justify-center text-slate-400 text-sm font-medium">Loading chart data...</div>
+                      <div className="w-full h-full flex items-center justify-center text-slate-400">Loading chart data...</div>
                     ) : (
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={dashboardData?.chartData || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                          <XAxis 
-                            dataKey="name" 
-                            axisLine={false} 
-                            tickLine={false} 
-                            tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }} 
-                            dy={10}
-                          />
-                          <YAxis 
-                            axisLine={false} 
-                            tickLine={false} 
-                            tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
-                            tickFormatter={(value) => `₹${value}`}
-                          />
+                        <BarChart data={dashboardData?.chartData || []} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
+                          <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dx={-10} tickFormatter={(value) => `₹${value/1000}k`} />
                           <Tooltip 
-                            cursor={{ fill: '#f8fafc' }}
-                            contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', padding: '10px 14px', fontSize: '13px' }}
-                            formatter={(value: number) => [<span className="font-bold text-slate-900">{formatCurrency(value)}</span>, <span className="text-slate-500 font-medium">Income</span>]}
+                            cursor={{ fill: '#f1f5f9' }}
+                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                            formatter={(value: number) => [formatCurrency(value), 'Revenue']}
                           />
-                          <defs>
-                            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="0%" stopColor="#3b82f6" stopOpacity={1}/>
-                              <stop offset="100%" stopColor="#2563eb" stopOpacity={0.8}/>
-                            </linearGradient>
-                          </defs>
-                          <Bar dataKey="revenue" fill="url(#colorRevenue)" radius={[4, 4, 0, 0]} maxBarSize={36} />
+                          <Bar dataKey="revenue" fill="#4f46e5" radius={[4, 4, 0, 0]} maxBarSize={40} />
                         </BarChart>
                       </ResponsiveContainer>
                     )}
                   </div>
                 </div>
 
-                {/* Recent Activity Table */}
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col">
-                  <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50/50 rounded-t-xl">
-                    <h3 className="text-base font-bold text-slate-800">Recent Transactions</h3>
+                {/* Recent Invoices */}
+                <div className="bg-white rounded-2xl p-0 flex flex-col border border-slate-200">
+                  <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                    <h3 className="font-bold text-slate-900">Recent Transactions</h3>
                   </div>
                   <div className="flex-1 overflow-y-auto">
                     {isLoading ? (
-                      <div className="text-center text-slate-400 py-8 text-sm font-medium">Loading transactions...</div>
-                    ) : dashboardData?.recentActivity?.length === 0 ? (
-                      <div className="text-center text-slate-400 py-8 text-sm font-medium">No recent transactions</div>
+                      <div className="p-8 text-center text-slate-400">Loading...</div>
                     ) : (
                       <div className="divide-y divide-slate-100">
                         {dashboardData?.recentActivity?.map((invoice: any) => (
-                          <div 
-                            key={invoice.id} 
-                            onClick={() => navigate(`/dashboard/invoices`)}
-                            className="flex items-center justify-between p-4 hover:bg-slate-50 cursor-pointer transition-colors"
-                          >
+                          <div key={invoice.id} className="p-4 hover:bg-slate-50/50 transition-colors flex items-center justify-between group cursor-pointer border-b border-slate-50 last:border-0" onClick={() => navigate('/dashboard/invoices')}>
                             <div>
-                              <p className="font-bold text-slate-900 text-[14px] hover:text-blue-600 transition-colors">{invoice.client?.name}</p>
+                              <p className="font-bold text-slate-900 text-[14px] group-hover:text-indigo-600 transition-colors">{invoice.client?.name}</p>
                               <div className="flex items-center gap-2 mt-1">
                                 <span className="text-[13px] font-medium text-slate-500">{invoice.invoiceNumber}</span>
                                 <span className="text-slate-300 text-xs">•</span>

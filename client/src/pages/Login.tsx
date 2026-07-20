@@ -47,17 +47,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <div className="absolute top-8 left-8 flex items-center gap-2 text-2xl font-bold tracking-tighter text-slate-900">
-        <ShieldCheck className="w-8 h-8 text-blue-600" />
+    <div className="min-h-screen flex items-center justify-center mesh-bg p-4 animate-fade-in relative overflow-hidden">
+      <div className="absolute top-8 left-8 flex items-center gap-2 text-2xl font-bold tracking-tighter text-slate-900 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <ShieldCheck className="w-6 h-6 text-white" />
+        </div>
         MartechAdda
       </div>
       
-      <Card className="w-full max-w-md shadow-lg border-slate-200">
+      <Card className="w-full max-w-md glass-panel border-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
         <form onSubmit={handleSubmit}>
           <CardHeader className="space-y-1">
             <div className="flex flex-col space-y-2 text-center">
-              <ShieldCheck className="mx-auto h-10 w-10 text-blue-600" />
+              <div className="mx-auto w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 mb-2">
+                <ShieldCheck className="h-6 w-6 text-white" />
+              </div>
               <h1 className="text-2xl font-bold tracking-tight text-slate-900">Sign in to MartechAdda</h1>
               <p className="text-sm text-slate-500">
                 Enter your email and password below to access your workspace
@@ -98,12 +102,12 @@ export default function Login() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
-            <Button className="w-full bg-blue-600 hover:bg-blue-700" disabled={loading}>
+            <Button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all" disabled={loading}>
               {loading ? "Signing in..." : "Sign in"}
             </Button>
             <div className="text-center text-sm text-slate-500">
               Don&apos;t have an account?{" "}
-              <a href="/register" className="font-semibold text-blue-600 hover:underline">
+              <a href="/register" className="font-semibold text-indigo-600 hover:text-indigo-700 hover:underline">
                 Sign up
               </a>
             </div>
