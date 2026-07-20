@@ -1,8 +1,23 @@
-import { ShieldCheck, LayoutDashboard, Users, FileText, Settings, LogOut, Package, ArrowUpRight, DollarSign, Activity, PieChart, Receipt, FileSignature } from "lucide-react";
+import { 
+  LayoutDashboard, 
+  Users, 
+  FileText, 
+  Settings, 
+  LogOut, 
+  Activity, 
+  DollarSign, 
+  PieChart, 
+  Package, 
+  Receipt,
+  FileSignature,
+  ShieldCheck,
+  Bell
+} from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { getDashboardData } from "@/lib/dashboardService";
+import AIAssistant from "@/components/AIAssistant";
 import {
   BarChart,
   Bar,
@@ -240,6 +255,9 @@ export default function Dashboard() {
           )}
         </div>
       </main>
+      
+      {/* Global AI Assistant */}
+      <AIAssistant />
     </div>
   );
 }

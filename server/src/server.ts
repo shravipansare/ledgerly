@@ -11,6 +11,7 @@ import reportRoutes from "./routes/report.routes";
 import quotationRoutes from "./routes/quotation.routes";
 import expenseRoutes from "./routes/expense.routes";
 import taxRoutes from "./routes/tax.routes";
+import aiRoutes from "./routes/ai.routes";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use("/api/taxes", taxRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Ledgerly API is running" });
