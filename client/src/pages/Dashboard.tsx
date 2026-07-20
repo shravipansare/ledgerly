@@ -1,4 +1,4 @@
-import { ShieldCheck, LayoutDashboard, Users, FileText, Settings, LogOut, Package, ArrowUpRight, DollarSign, Activity, PieChart, Receipt } from "lucide-react";
+import { ShieldCheck, LayoutDashboard, Users, FileText, Settings, LogOut, Package, ArrowUpRight, DollarSign, Activity, PieChart, Receipt, FileSignature } from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
@@ -79,6 +79,10 @@ export default function Dashboard() {
           <Link to="/dashboard/products" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/products') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <Package className="w-[18px] h-[18px]" />
             Products & Services
+          </Link>
+          <Link to="/dashboard/quotations" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/quotations') || isActive('/dashboard/quotations/new') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
+            <FileSignature className="w-[18px] h-[18px]" />
+            Quotations
           </Link>
           <Link to="/dashboard/expenses" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive('/dashboard/expenses') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'}`}>
             <Receipt className="w-[18px] h-[18px]" />

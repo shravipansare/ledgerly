@@ -8,6 +8,7 @@ import productRoutes from "./routes/product.routes";
 import invoiceRoutes from "./routes/invoice.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import reportRoutes from "./routes/report.routes";
+import quotationRoutes from "./routes/quotation.routes";
 import expenseRoutes from "./routes/expense.routes";
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/clients", clientRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/invoices", invoiceRoutes);
+app.use("/api/quotations", quotationRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/expenses", expenseRoutes);
