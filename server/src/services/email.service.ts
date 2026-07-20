@@ -58,6 +58,52 @@ export const sendInvoiceEmailService = async (params: SendInvoiceEmailParams): P
   }
 };
 
+interface SendQuotationEmailParams {
+  to: string;
+  clientName: string;
+  quotationNumber: string;
+  totalAmount: number;
+  pdfBase64: string;
+}
+
+export const sendQuotationEmailService = async (params: SendQuotationEmailParams): Promise<void> => {
+  const { to, clientName, quotationNumber, totalAmount, pdfBase64 } = params;
+
+  const base64Data = pdfBase64.includes(',') ? pdfBase64.split(',')[1] : pdfBase64;
+  const pdfBuffer = Buffer.from(base64Data, "base64");
+
+  const mailOptions = {
+    from: `"MartechAdda Billing" <${process.env.SMTP_FROM}>`,
+    to,
+    subject: `Quotation No. ${quotationNumber} from MartechAdda`,
+    text: `Hello ${clientName},\n\nPlease find your quotation No. ${quotationNumber} for the total amount of ₹${totalAmount.toFixed(2)} attached to this email.\n\nThank you for your business!\n\nBest regards,\nMartechAdda`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #334155;">
+        <h2 style="color: #0f172a;">Quotation No. ${quotationNumber}</h2>
+        <p>Hello <strong>${clientName}</strong>,</p>
+        <p>Please find your quotation for the total amount of <strong>₹${totalAmount.toFixed(2)}</strong> attached to this email as a PDF.</p>
+        <p>Thank you for considering our services!</p>
+        <br/>
+        <p style="font-size: 0.875rem; color: #64748b;">Best regards,<br/>MartechAdda Billing Team</p>
+      </div>
+    `,
+    attachments: [
+      {
+        filename: `Quotation-${quotationNumber}.pdf`,
+        content: pdfBuffer,
+        contentType: "application/pdf",
+      },
+    ],
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Error sending quotation email via Nodemailer:", error);
+    throw error;
+  }
+};
+
 interface SendPasswordResetParams {
   to: string;
   userName: string;

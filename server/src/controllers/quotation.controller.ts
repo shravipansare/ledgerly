@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../db";
+import { sendQuotationEmailService } from "../services/email.service";
 
 interface AuthRequest extends Request {
   user?: any;
@@ -196,5 +197,41 @@ export const convertQuotationToInvoice = async (req: AuthRequest, res: Response)
   } catch (error) {
     console.error("Error converting quotation:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const sendQuotationEmail = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+    const { pdfBase64 } = req.body;
+
+    if (!pdfBase64) {
+      res.status(400).json({ error: "PDF data is required" });
+      return;
+    }
+
+    const quotation = await prisma.quotation.findUnique({
+      where: { id },
+      include: { client: true },
+    });
+
+    if (!quotation || quotation.userId !== userId) {
+      res.status(404).json({ error: "Quotation not found" });
+      return;
+    }
+
+    await sendQuotationEmailService({
+      to: quotation.client.email,
+      clientName: quotation.client.name,
+      quotationNumber: quotation.quotationNumber,
+      totalAmount: quotation.total,
+      pdfBase64,
+    });
+
+    res.json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error("Error sending quotation email:", error);
+    res.status(500).json({ error: "Failed to send email" });
   }
 };

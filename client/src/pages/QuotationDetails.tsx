@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getQuotationById, updateQuotationStatus, convertQuotationToInvoice } from "@/lib/quotationService";
-import { ArrowLeft, CheckCircle2, Download, XCircle, FileText, Share2, ChevronDown } from "lucide-react";
+import { getQuotationById, updateQuotationStatus, convertQuotationToInvoice, sendQuotationEmail } from "@/lib/quotationService";
+import { ArrowLeft, CheckCircle2, Download, XCircle, FileText, Share2, ChevronDown, Mail, MessageCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function QuotationDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const quotationRef = useRef<HTMLDivElement>(null);
+  const [isEmailSending, setIsEmailSending] = useState(false);
 
   const { data: quotation, isLoading } = useQuery({
     queryKey: ["quotation", id],
@@ -79,6 +80,50 @@ export default function QuotationDetails() {
     pdf.save(`Quotation-${quotation?.quotationNumber || 'Download'}.pdf`);
   };
 
+  const handleEmailShare = async () => {
+    if (!quotation || !quotation.client || !quotationRef.current) return;
+    
+    setIsEmailSending(true);
+    try {
+      const canvas = await html2canvas(quotationRef.current, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      });
+      
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      
+      const pdfBase64 = pdf.output("datauristring");
+      
+      await sendQuotationEmail(quotation.id, pdfBase64);
+      
+      alert("Email sent successfully via SMTP!");
+    } catch (error: any) {
+      console.error("Error sending email:", error);
+      alert("Failed to send email: " + (error.response?.data?.error || error.message));
+    } finally {
+      setIsEmailSending(false);
+    }
+  };
+
+  const handleWhatsAppShare = () => {
+    if (!quotation || !quotation.client) return;
+    const phone = quotation.client.phone ? quotation.client.phone.replace(/\D/g, '') : '';
+    const text = encodeURIComponent(`Hello ${quotation.client.name}, this is your quotation No. ${quotation.quotationNumber} for the amount of ₹${quotation.total.toFixed(2)}.`);
+    const url = phone ? `https://wa.me/${phone}?text=${text}` : `https://wa.me/?text=${text}`;
+    window.open(url, '_blank');
+  };
+
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center bg-[#f8fafc]">
@@ -124,6 +169,26 @@ export default function QuotationDetails() {
         </div>
         
         <div className="flex items-center gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="border-slate-300 text-slate-700 bg-white hover:bg-slate-50 shadow-sm">
+                <Share2 className="w-4 h-4 mr-2" />
+                Share
+                <ChevronDown className="w-4 h-4 ml-2 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem onClick={handleEmailShare} disabled={isEmailSending} className="cursor-pointer py-2">
+                {isEmailSending ? <Loader2 className="w-4 h-4 mr-2 animate-spin text-blue-600" /> : <Mail className="w-4 h-4 mr-2" />}
+                {isEmailSending ? "Sending..." : "Send via Email"}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleWhatsAppShare} className="cursor-pointer py-2 text-emerald-600 focus:text-emerald-700 focus:bg-emerald-50">
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Send via WhatsApp
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Button variant="outline" className="border-slate-300 text-slate-700 bg-white hover:bg-slate-50 shadow-sm" onClick={handleDownloadPDF}>
             <Download className="w-4 h-4 mr-2" />
             Download PDF

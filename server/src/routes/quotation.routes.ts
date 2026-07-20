@@ -6,7 +6,8 @@ import {
   getQuotationById,
   deleteQuotation,
   updateQuotationStatus,
-  convertQuotationToInvoice
+  convertQuotationToInvoice,
+  sendQuotationEmail
 } from "../controllers/quotation.controller";
 
 const router = Router();
@@ -19,5 +20,6 @@ router.get("/:id", getQuotationById);
 router.delete("/:id", deleteQuotation);
 router.patch("/:id/status", updateQuotationStatus);
 router.post("/:id/convert", convertQuotationToInvoice);
+router.post("/:id/send-email", sendQuotationEmail);
 
 export default router;

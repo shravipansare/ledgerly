@@ -38,3 +38,8 @@ export const convertQuotationToInvoice = async (id: string) => {
   const response = await axios.post(`${API_URL}/quotations/${id}/convert`, {}, getAuthHeaders());
   return response.data;
 };
+
+export const sendQuotationEmail = async (id: string, pdfBase64: string) => {
+  const response = await axios.post(`${API_URL}/quotations/${id}/send-email`, { pdfBase64 }, getAuthHeaders());
+  return response.data;
+};
