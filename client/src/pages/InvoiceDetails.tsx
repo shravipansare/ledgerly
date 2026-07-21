@@ -12,6 +12,7 @@ import {
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
+import { useAuthStore } from "@/store/authStore";
 
 export default function InvoiceDetails() {
   const { id } = useParams();
@@ -19,6 +20,7 @@ export default function InvoiceDetails() {
   const queryClient = useQueryClient();
   const invoiceRef = useRef<HTMLDivElement>(null);
   const [isEmailSending, setIsEmailSending] = useState(false);
+  const user = useAuthStore((state) => state.user);
 
   const { data: invoice, isLoading } = useQuery({
     queryKey: ["invoice", id],
@@ -200,10 +202,10 @@ export default function InvoiceDetails() {
               <p className="text-slate-500 font-medium">No. {invoice.invoiceNumber}</p>
             </div>
             <div className="text-right">
-              <h3 className="font-bold text-slate-800 text-lg">MartechAdda</h3>
-              <p className="text-sm text-slate-500 mt-1">123 Tech Avenue</p>
-              <p className="text-sm text-slate-500">Business City, 10001</p>
-              <p className="text-sm text-slate-500 mt-1">contact@martechadda.com</p>
+              <h3 className="font-bold text-slate-800 text-lg">{user?.companyName || "Your Company Name"}</h3>
+              <p className="text-sm text-slate-500 mt-1">{user?.companyAddress || "Add your address in Settings"}</p>
+              <p className="text-sm text-slate-500 mt-1">{user?.companyPhone || ""}</p>
+              {user?.companyTaxId && <p className="text-sm text-slate-500 mt-1">Tax ID: {user.companyTaxId}</p>}
             </div>
           </div>
 

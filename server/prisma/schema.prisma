@@ -63,6 +63,12 @@ model User {
   role      Role     @default(OWNER)
   resetPasswordToken   String?
   resetPasswordExpires DateTime?
+  companyName    String?
+  companyAddress String?
+  companyPhone   String?
+  companyTaxId   String?
+  companyLogo    String?
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   

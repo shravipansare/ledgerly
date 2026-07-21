@@ -6,6 +6,11 @@ export interface User {
   firstName: string;
   lastName: string;
   role: string;
+  companyName?: string;
+  companyAddress?: string;
+  companyPhone?: string;
+  companyTaxId?: string;
+  companyLogo?: string;
 }
 
 interface AuthState {
@@ -14,6 +19,7 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (user: User, token: string) => void;
   logout: () => void;
+  updateUser: (user: Partial<User>) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -29,5 +35,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     localStorage.removeItem("ledgerly_user");
     localStorage.removeItem("ledgerly_token");
     set({ user: null, token: null, isAuthenticated: false });
+  },
+  updateUser: (updatedFields) => {
+    set((state) => {
+      if (!state.user) return state;
+      const newUser = { ...state.user, ...updatedFields };
+      localStorage.setItem("ledgerly_user", JSON.stringify(newUser));
+      return { user: newUser };
+    });
   },
 }));

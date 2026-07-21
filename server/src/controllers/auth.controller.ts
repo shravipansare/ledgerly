@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { prisma } from "../db";
 
-const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret";
+
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -64,9 +64,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Generate JWT
+    const secret = process.env.JWT_SECRET || "fallback_secret";
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
-      JWT_SECRET,
+      secret,
       { expiresIn: "1d" }
     );
 

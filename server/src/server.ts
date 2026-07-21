@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
+dotenv.config();
+
 import authRoutes from "./routes/auth.routes";
 import clientRoutes from "./routes/client.routes";
 import productRoutes from "./routes/product.routes";
@@ -12,8 +14,7 @@ import quotationRoutes from "./routes/quotation.routes";
 import expenseRoutes from "./routes/expense.routes";
 import taxRoutes from "./routes/tax.routes";
 import aiRoutes from "./routes/ai.routes";
-
-dotenv.config();
+import userRoutes from "./routes/user.routes";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Ledgerly API is running" });

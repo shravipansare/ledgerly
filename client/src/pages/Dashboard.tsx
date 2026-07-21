@@ -5,7 +5,7 @@ import {
   Settings, 
   LogOut, 
   Activity, 
-  DollarSign, 
+  IndianRupee, 
   PieChart, 
   Package, 
   Receipt,
@@ -154,7 +154,7 @@ export default function Dashboard() {
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                  { label: "Total Revenue", value: dashboardData?.metrics?.totalRevenue || 0, icon: DollarSign, color: "text-indigo-600", bg: "bg-indigo-50", delay: "0.1s" },
+                  { label: "Total Revenue", value: dashboardData?.metrics?.totalRevenue || 0, icon: IndianRupee, color: "text-indigo-600", bg: "bg-indigo-50", delay: "0.1s" },
                   { label: "Outstanding", value: dashboardData?.metrics?.outstandingAmount || 0, icon: Activity, color: "text-orange-600", bg: "bg-orange-50", delay: "0.2s" },
                   { label: "Paid Invoices", value: dashboardData?.metrics?.paidCount || 0, icon: FileText, color: "text-emerald-600", bg: "bg-emerald-50", delay: "0.3s" },
                   { label: "Active Clients", value: dashboardData?.metrics?.totalClients || 0, icon: Users, color: "text-purple-600", bg: "bg-purple-50", delay: "0.4s" },

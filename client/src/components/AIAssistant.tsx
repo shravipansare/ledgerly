@@ -12,7 +12,7 @@ export default function AIAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([
-    { role: 'ai', text: 'Hi! I am your Ledgerly AI Assistant. Try saying: "Create an invoice for ABC Corp for $500".' }
+    { role: 'ai', text: 'Hi! I am your Ledgerly AI Assistant. Try saying: "Create an invoice for ABC Corp for ₹5000".' }
   ]);
   
   const token = useAuthStore(state => state.token);
@@ -50,6 +50,12 @@ export default function AIAssistant() {
         } else if (res.data.type === "quotation") {
           navigate(`/dashboard/quotations/${res.data.data.id}`);
           setIsOpen(false);
+        } else if (res.data.type === "client") {
+          navigate(`/dashboard/clients`);
+          setIsOpen(false);
+        } else if (res.data.type === "expense") {
+          navigate(`/dashboard/expenses`);
+          setIsOpen(false);
         }
       }, 1500);
 
@@ -68,7 +74,7 @@ export default function AIAssistant() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`fixed bottom-6 right-6 p-4 rounded-full shadow-lg shadow-indigo-500/30 transition-all duration-300 z-50 flex items-center justify-center 
-          ${isOpen ? 'bg-slate-800 text-white rotate-90 scale-90' : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:scale-110 animate-bounce'}`}
+          ${isOpen ? 'bg-slate-800 text-white rotate-90 scale-90' : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:scale-110'}`}
       >
         {isOpen ? <X className="w-6 h-6" /> : <Sparkles className="w-6 h-6" />}
       </button>
@@ -116,7 +122,7 @@ export default function AIAssistant() {
             <Input 
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="e.g. Create an invoice for ABC..."
+              placeholder="e.g. Create an invoice for ABC for ₹5000..."
               className="border-none bg-slate-100/50 focus-visible:ring-1 focus-visible:ring-indigo-500 rounded-full"
               disabled={isLoading}
             />

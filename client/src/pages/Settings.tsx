@@ -1,15 +1,46 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, Trash2, Edit2, CheckCircle2 } from "lucide-react";
+import { Plus, Trash2, CheckCircle2, Upload, Save, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getTaxes, createTax, deleteTax } from "@/lib/taxService";
+import { useAuthStore } from "@/store/authStore";
+import axios from "axios";
+import api from "@/lib/api";
 
 export default function Settings() {
   const queryClient = useQueryClient();
+  const user = useAuthStore((state) => state.user);
+  const updateUser = useAuthStore((state) => state.updateUser);
   const [newTaxName, setNewTaxName] = useState("");
   const [newTaxRate, setNewTaxRate] = useState("");
+  
+  const [profileData, setProfileData] = useState({
+    companyName: user?.companyName || "",
+    companyAddress: user?.companyAddress || "",
+    companyPhone: user?.companyPhone || "",
+    companyTaxId: user?.companyTaxId || "",
+  });
+  
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
+  const [profileMessage, setProfileMessage] = useState({ type: "", text: "" });
+
+  const handleProfileSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsUpdatingProfile(true);
+    setProfileMessage({ type: "", text: "" });
+    
+    try {
+      const res = await api.put("/users/profile", profileData);
+      updateUser(res.data.user);
+      setProfileMessage({ type: "success", text: "Profile updated successfully!" });
+    } catch (err: any) {
+      setProfileMessage({ type: "error", text: err.response?.data?.error || "Failed to update profile." });
+    } finally {
+      setIsUpdatingProfile(false);
+    }
+  };
 
   const { data: taxes = [], isLoading } = useQuery({
     queryKey: ["taxes"],
@@ -126,11 +157,73 @@ export default function Settings() {
           </div>
         </section>
         
-        {/* Placeholder for future settings */}
-        <section className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden opacity-60">
+        {/* Company Profile Configuration Panel */}
+        <section className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-slate-200 bg-slate-50">
             <h3 className="text-lg font-bold text-slate-900">Company Profile</h3>
-            <p className="text-sm text-slate-500">Coming soon.</p>
+            <p className="text-sm text-slate-500">These details will automatically appear on your generated invoices and quotations.</p>
+          </div>
+          
+          <div className="p-6">
+            {profileMessage.text && (
+              <div className={`mb-6 p-3 rounded-md text-sm ${profileMessage.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                {profileMessage.text}
+              </div>
+            )}
+            
+            <form onSubmit={handleProfileSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid gap-2">
+                  <Label htmlFor="companyName">Business Name</Label>
+                  <Input 
+                    id="companyName" 
+                    value={profileData.companyName}
+                    onChange={(e) => setProfileData({...profileData, companyName: e.target.value})}
+                    placeholder="e.g. Acme Corporation"
+                  />
+                </div>
+                
+                <div className="grid gap-2">
+                  <Label htmlFor="companyPhone">Business Phone</Label>
+                  <Input 
+                    id="companyPhone" 
+                    value={profileData.companyPhone}
+                    onChange={(e) => setProfileData({...profileData, companyPhone: e.target.value})}
+                    placeholder="e.g. +91 9876543210"
+                  />
+                </div>
+                
+                <div className="grid gap-2">
+                  <Label htmlFor="companyTaxId">Tax ID / GSTIN / PAN</Label>
+                  <Input 
+                    id="companyTaxId" 
+                    value={profileData.companyTaxId}
+                    onChange={(e) => setProfileData({...profileData, companyTaxId: e.target.value})}
+                    placeholder="e.g. 22AAAAA0000A1Z5"
+                  />
+                </div>
+                
+                <div className="grid gap-2 md:col-span-2">
+                  <Label htmlFor="companyAddress">Business Address</Label>
+                  <Input 
+                    id="companyAddress" 
+                    value={profileData.companyAddress}
+                    onChange={(e) => setProfileData({...profileData, companyAddress: e.target.value})}
+                    placeholder="e.g. 123 Tech Avenue, Mumbai, MH 400001"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex justify-end pt-4 border-t border-slate-100">
+                <Button type="submit" className="bg-blue-600 hover:bg-blue-700" disabled={isUpdatingProfile}>
+                  {isUpdatingProfile ? (
+                    <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving...</>
+                  ) : (
+                    <><Save className="w-4 h-4 mr-2" /> Save Profile</>
+                  )}
+                </Button>
+              </div>
+            </form>
           </div>
         </section>
 

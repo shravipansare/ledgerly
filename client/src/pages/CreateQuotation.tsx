@@ -38,6 +38,9 @@ export default function CreateQuotation() {
       queryClient.invalidateQueries({ queryKey: ["quotations"] });
       navigate("/dashboard/quotations");
     },
+    onError: (error: any) => {
+      alert("Error generating quotation: " + (error.response?.data?.error || error.message));
+    }
   });
 
   // Derived calculations

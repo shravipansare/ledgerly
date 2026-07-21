@@ -30,37 +30,76 @@ export const processAIPrompt = async (req: AuthRequest, res: Response): Promise<
       return;
     }
 
-    if (!intent.clientName) {
+    // Handle GET_REVENUE first as it doesn't need a client
+    if (intent.action === "GET_REVENUE") {
+      const paidInvoices = await prisma.invoice.findMany({
+        where: { userId, status: "PAID" },
+        select: { total: true }
+      });
+      const totalRevenue = paidInvoices.reduce((sum, inv) => sum + inv.total, 0);
+      const formattedRevenue = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(totalRevenue);
+      
+      res.json({ 
+        message: `Your total revenue from all paid invoices is ${formattedRevenue}. Great job!`, 
+        type: "revenue", 
+        data: { total: totalRevenue } 
+      });
+      return;
+    }
+
+    if (!intent.clientName && intent.action !== "LOG_EXPENSE") {
       res.status(400).json({ error: "I couldn't identify the client name in your request." });
       return;
     }
 
     // 3. Resolve Client
-    // Find client by name (case insensitive ideally, but exact for simplicity in mock)
-    let client = await prisma.client.findFirst({
-      where: { 
-        userId, 
-        name: { contains: intent.clientName, mode: 'insensitive' } 
-      }
-    });
-
-    // Create client if doesn't exist
-    if (!client) {
-      client = await prisma.client.create({
-        data: {
-          userId,
-          name: intent.clientName,
-          email: `${intent.clientName.replace(/\s+/g, '').toLowerCase()}@example.com`
+    let client = null;
+    if (intent.clientName) {
+      client = await prisma.client.findFirst({
+        where: { 
+          userId, 
+          name: { contains: intent.clientName, mode: 'insensitive' } 
         }
       });
+
+      // Create client if doesn't exist
+      if (!client) {
+        client = await prisma.client.create({
+          data: {
+            userId,
+            name: intent.clientName,
+            email: intent.email || `${intent.clientName.replace(/\s+/g, '').toLowerCase()}@example.com`
+          }
+        });
+      }
     }
 
     const amount = intent.totalAmount || 0;
     const description = intent.description || "Services Rendered";
 
     // 4. Create the Entity
+    
+    if (intent.action === "ADD_CLIENT") {
+      res.json({ message: `Successfully added ${client?.name} as a new client!`, type: "client", data: client });
+      return;
+    }
+
+    if (intent.action === "LOG_EXPENSE") {
+      const newExpense = await prisma.expense.create({
+        data: {
+          userId,
+          category: description,
+          amount,
+          date: new Date(),
+          description: intent.description ? `AI Logged: ${intent.description}` : "AI Logged Expense",
+          receiptUrl: null
+        }
+      });
+      res.json({ message: `Logged an expense of ₹${amount} for ${description}.`, type: "expense", data: newExpense });
+      return;
+    }
     if (intent.action === "CREATE_INVOICE") {
-      const invoiceNumber = \`INV-\${Math.floor(1000 + Math.random() * 9000)}\`;
+      const invoiceNumber = `INV-${Math.floor(1000 + Math.random() * 9000)}`;
       const newInvoice = await prisma.invoice.create({
         data: {
           userId,
@@ -89,7 +128,7 @@ export const processAIPrompt = async (req: AuthRequest, res: Response): Promise<
     }
 
     if (intent.action === "CREATE_QUOTATION") {
-      const quotationNumber = \`EST-\${Math.floor(1000 + Math.random() * 9000)}\`;
+      const quotationNumber = `EST-${Math.floor(1000 + Math.random() * 9000)}`;
       const newQuotation = await prisma.quotation.create({
         data: {
           userId,

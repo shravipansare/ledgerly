@@ -27,6 +27,7 @@ export const getQuotations = async (req: AuthRequest, res: Response): Promise<vo
 export const createQuotation = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user.id;
+    console.log("Creating quotation with payload:", req.body);
     const { clientId, quotationNumber, issueDate, validUntil, subtotal, taxTotal, total, notes, status, items } = req.body;
 
     const quotation = await prisma.quotation.create({
@@ -58,9 +59,9 @@ export const createQuotation = async (req: AuthRequest, res: Response): Promise<
     });
 
     res.status(201).json(quotation);
-  } catch (error) {
-    console.error("Error creating quotation:", error);
-    res.status(500).json({ error: "Internal server error" });
+  } catch (error: any) {
+    console.error("Error creating quotation (Full):", error);
+    res.status(500).json({ error: "Internal server error: " + error.message });
   }
 };
 
