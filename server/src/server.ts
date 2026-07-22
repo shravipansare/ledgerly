@@ -15,6 +15,7 @@ import expenseRoutes from "./routes/expense.routes";
 import taxRoutes from "./routes/tax.routes";
 import aiRoutes from "./routes/ai.routes";
 import userRoutes from "./routes/user.routes";
+import paymentRoutes from "./routes/payment.routes";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/api/reports", reportRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/payments", paymentRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Ledgerly API is running" });

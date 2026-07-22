@@ -1,7 +1,8 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getInvoiceById, updateInvoiceStatus, sendInvoiceEmail } from "@/lib/invoiceService";
-import { ArrowLeft, CheckCircle2, Download, Printer, Mail, MessageCircle, Share2, ChevronDown, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Download, Printer, Mail, MessageCircle, Share2, ChevronDown, Loader2, CreditCard } from "lucide-react";
+import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -38,6 +39,71 @@ export default function InvoiceDetails() {
 
   const handleMarkAsPaid = () => {
     updateStatusMutation.mutate("PAID");
+  };
+
+  const handlePayNow = async () => {
+    if (!invoice) return;
+    try {
+      const scriptLoaded = await new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+
+      if (!scriptLoaded) {
+        alert("Failed to load payment gateway. Check your internet connection.");
+        return;
+      }
+
+      const { data: orderData } = await api.post("/payments/create-order", {
+        invoiceId: invoice.id
+      });
+
+      const options = {
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: user?.companyName || "Ledgerly",
+        description: `Payment for Invoice ${invoice.invoiceNumber}`,
+        order_id: orderData.orderId,
+        handler: async function (response: any) {
+          try {
+            await api.post("/payments/verify", {
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              invoiceId: invoice.id
+            });
+            alert("Payment Successful!");
+            queryClient.invalidateQueries({ queryKey: ["invoice", id] });
+            queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+          } catch (error) {
+            console.error("Verification failed", error);
+            alert("Payment verification failed. Contact support.");
+          }
+        },
+        prefill: {
+          name: invoice.client.name,
+          email: invoice.client.email,
+          contact: invoice.client.phone || "",
+        },
+        theme: {
+          color: "#2563eb",
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on("payment.failed", function (response: any) {
+        alert(`Payment Failed: ${response.error.description}`);
+      });
+      rzp.open();
+
+    } catch (error: any) {
+      console.error("Checkout error:", error);
+      alert(error.response?.data?.error || "Error initializing payment gateway.");
+    }
   };
 
   const handleDownloadPDF = async () => {
@@ -180,10 +246,16 @@ export default function InvoiceDetails() {
             Download PDF
           </Button>
           {!isPaid && (
-            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm" onClick={handleMarkAsPaid} disabled={updateStatusMutation.isPending}>
-              <CheckCircle2 className="w-4 h-4 mr-2" />
-              {updateStatusMutation.isPending ? "Updating..." : "Mark as Paid"}
-            </Button>
+            <>
+              <Button variant="outline" className="text-emerald-700 border-emerald-200 bg-emerald-50 hover:bg-emerald-100" onClick={handleMarkAsPaid} disabled={updateStatusMutation.isPending}>
+                <CheckCircle2 className="w-4 h-4 mr-2" />
+                Mark as Paid (Cash)
+              </Button>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm" onClick={handlePayNow}>
+                <CreditCard className="w-4 h-4 mr-2" />
+                Pay Now
+              </Button>
+            </>
           )}
         </div>
       </div>
